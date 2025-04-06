@@ -62,9 +62,9 @@ const Nav: React.FC = () => {
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 group"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <div className={`h-0.5 w-6 bg-white rounded-full transition-all ${isMenuOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`} />
-            <div className={`h-0.5 w-6 bg-white rounded-full transition-all ${isMenuOpen ? 'opacity-0' : 'mb-1.5'}`} />
-            <div className={`h-0.5 w-6 bg-white rounded-full transition-all ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            <div className={`h-0.5 w-6 bg-black rounded-full transition-all ${isMenuOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`} />
+            <div className={`h-0.5 w-6 bg-black rounded-full transition-all ${isMenuOpen ? 'opacity-0' : 'mb-1.5'}`} />
+            <div className={`h-0.5 w-6 bg-black rounded-full transition-all ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
           </button>
         </div>
 
