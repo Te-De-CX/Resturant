@@ -42,7 +42,7 @@ const Hero = () => {
         </div>
         
         {/* Background Circle */}
-        <div className="hidden lg:block absolute -right-[15rem] bottom-[5rem] w-[50rem] h-[50rem] bg-yellow-500 -z-10 rounded-full opacity-80" />
+        <div className="hidden lg:block absolute -right-[15rem] bottom-[5rem] w-[50rem] h-[50rem] bg-[#fff423] -z-10 rounded-full opacity-80" />
       </div>
     </section>
   );

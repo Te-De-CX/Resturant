@@ -6,7 +6,7 @@ const Menu = () => {
     
     const menu = (
         <>
-         <h3>our best & delicious menu</h3>
+         <h3 className="text-center text-4xl capitalize font-semibold" >our best & delicious menu</h3>
             <ul>
                 {
                     ["all", "bread", "chiffon & rolls", "donut", "pastry and danish", "cakes", "cookies"].map( ( value, index ) => (

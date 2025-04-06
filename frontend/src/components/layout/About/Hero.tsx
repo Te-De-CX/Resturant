@@ -1,13 +1,12 @@
 import Image from 'next/image';
-import noodlesBg from '../../../../public/images/home/menu/noodles.jpg';
+import HeroImg from '../../../../public/images/about/hero/bg.png';
 
 const Hero = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center w-full h-screen">
-      {/* Background Image */}
+    <section className="relative flex flex-col  justify-center w-full h-screen">
       <div className="absolute inset-0 -z-10">
         <Image
-          src={noodlesBg}
+          src={HeroImg}
           alt="Noodles background"
           fill
           className="object-cover"
@@ -15,11 +14,9 @@ const Hero = () => {
           priority
         />
       </div>
-      
-      {/* Content */}
-      <div className="text-center px-4 max-w-2xl mx-auto text-white">
-        <h2 className="text-4xl font-bold mb-4">
-          Creating a New World of FlaVORs
+      <div className="px-4 mx-auto text-white flex flex-col items-start">
+        <h2 className=" w-5/12 text-6xl font-bold mb-4">
+          Creating a New World of <span className='text-yellow-400'>FlaVORs</span>
         </h2>
         <p className="mb-8 text-lg">
           Order Exactly What You Crave, Anytime, Anywhere! This highlights the customization aspect, 
