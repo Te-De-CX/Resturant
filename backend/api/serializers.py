@@ -1,17 +1,26 @@
 from rest_framework import serializers
-from .models import User, Products, Order, OrderItem, Category, Payment, Review
-
+from .models import User, Products, Order, OrderItem, Category, Payment, Review, ChefsData,Ads
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
-class UserSerializer(serializers.ModelSerializer):
-    # Add a write-only password field
-    password = serializers.CharField(write_only=True)
+User = get_user_model()
 
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = [
+            'id', 'username', 'email', 'password',
+            'first_name', 'last_name', 'phone_number',
+            'address', 'profile_picture'
+        ]
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'profile_picture': {'read_only': True},
+        }
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,3 +57,13 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ['id', 'user', 'product', 'rating', 'comment', 'review_date']
+        
+class ChefsDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChefsData
+        fields = ['id', 'name', 'profile_picture', 'description', 'text', 'rating']
+        
+class AdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ads
+        fields = ['id', 'title', 'description', 'image', 'start_date', 'end_date', 'is_active']

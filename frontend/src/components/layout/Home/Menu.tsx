@@ -30,7 +30,9 @@ const Menu = () => {
                 ))}
             </div>
             </>
-            <button>see all</button>
+            <div className="flex justify-center mt-8">
+                <button className="text-lg py-4 px-12 capitalize text-white bg-black rounded-full" >see all</button>
+            </div>
         </>
     )
 

@@ -16,20 +16,20 @@ const Nav: React.FC = () => {
 
   return (
     <nav className="fixed w-full z-50 bg-white/20 backdrop-blur-xl border-b border-white/30 shadow-lg shadow-black/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-3">
         <div className="flex justify-between items-center">
           {/* Logo Section */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <Image 
-              width={28} 
-              height={28} 
+              width={30} 
+              height={30} 
               src={Logo} 
               alt="Logo" 
-              className="filter drop-shadow-md"
+              className="filter drop-shadow-md flex justify-center items-center"
             />
-            <h5 className="hidden sm:flex flex-col text-sm font-medium text-black drop-shadow-md">
+            <h5 className="hidden sm:flex flex-col text-md capitalize font-bold text-black drop-shadow-md">
               <span className="leading-4">tamang</span>
-              <span className="text-xs">foodService</span>
+              <span className="">foodService</span>
             </h5>
           </div>
 
