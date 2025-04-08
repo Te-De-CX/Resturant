@@ -1,7 +1,10 @@
 from rest_framework import viewsets, permissions
-from .models import User, Products, Order, OrderItem, Category, Payment, Review
-from .serializers import UserSerializer, ProductsSerializer, OrderSerializer, CategorySerializer, PaymentSerializer, ReviewSerializer
+from .models import Products, Order, OrderItem, Category, Payment, Review, Ads, ChefsData
+from .serializers import ProductsSerializer, OrderSerializer, CategorySerializer, PaymentSerializer, ReviewSerializer, AdsSerializer, ChefsDataSerializer, UserSerializer
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
+
+User = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -11,6 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
+    
     def perform_create(self, serializer):
         password = serializer.validated_data.get('password')
         serializer.validated_data['password'] = make_password(password)
@@ -52,4 +56,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        
+class ChefsDataViewSet(viewsets.ModelViewSet):
+    queryset = ChefsData.objects.all()
+    serializer_class = ChefsDataSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
+class AdsViewSet(viewsets.ModelViewSet):
+    queryset = Ads.objects.all()
+    serializer_class = AdsSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

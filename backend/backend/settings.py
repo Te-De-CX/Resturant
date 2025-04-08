@@ -41,6 +41,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Add to settings.py:
+AUTH_USER_MODEL = 'api.CustomUser'
+
 # Application definition
 
 INSTALLED_APPS = [
