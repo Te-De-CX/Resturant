@@ -2,8 +2,8 @@
 //foods
 
 export { default as Image1 } from '../../../../public/images/about/food/image1.png';
-export { default as Image2 } from '../../../../public/images/about/food/image2.png';
-export { default as Image3 } from '../../../../public/images/about/food/image3.png';
+export { default as Image2 } from '../../../../public/images/about/food/image2.jpg';
+export { default as Image3 } from '../../../../public/images/about/food/image3.jpg';
 
 //chefs
 

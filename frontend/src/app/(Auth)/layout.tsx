@@ -1,10 +1,13 @@
-import Register from "@/components/layout/Auth/Register/Register";
 
-const RegisterPage = () => {
+const RegisterPage = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
 
     const register = (
         <>
-          <Register /> 
+          {children}
         </>
     )
 

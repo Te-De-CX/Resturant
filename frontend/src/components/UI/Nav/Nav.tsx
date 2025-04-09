@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 
 import { useState } from "react";
 import Image from "next/image";
@@ -8,10 +9,10 @@ const Nav: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const pages = [
-    { id: 1, name: "home" },
-    { id: 2, name: "about" },
-    { id: 3, name: "menu" },
-    { id: 4, name: "contact" },
+    { id: 1, name: "home", link: "/" },
+    { id: 2, name: "about", link: "/about"  },
+    { id: 3, name: "menu", link: "/menu"  },
+    { id: 4, name: "resturants",  link: "/resturants" },
   ];
 
   return (
@@ -37,24 +38,24 @@ const Nav: React.FC = () => {
           <ul className="hidden md:flex gap-8">
             {pages.map((page) => (
               <li key={page.id}>
-                <a 
-                  href="#" 
+                <Link
+                  href={page.link}
                   className="text-black/90 hover:text-black font-medium text-sm uppercase tracking-wider transition-colors drop-shadow-md"
                 >
                   {page.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex gap-4 items-center">
-            <button className="px-5 py-1.5 bg-white/20 hover:bg-white/30 text-black text-sm font-bold rounded-full border border-white/30 transition-all shadow-sm">
+            <Link href="/register" className="px-5 py-1.5 bg-white/20 hover:bg-white/30 text-black text-sm font-bold rounded-full border border-white/30 transition-all shadow-sm">
               Get Started
-            </button>
-            <button className="text-black/90 hover:text-black font-medium text-sm transition-colors">
+            </Link>
+            <Link href="/login" className="text-black/90 hover:text-black font-medium text-sm transition-colors">
               Login
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -85,12 +86,12 @@ const Nav: React.FC = () => {
               ))}
             </ul>
             <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-white/20">
-              <button className="w-full py-2 bg-white/20 hover:bg-white/30 text-black text-sm font-bold rounded-full border border-white/30 transition-all">
+              <Link href="/login"  className="w-full py-2 bg-white/20 hover:bg-white/30 text-black text-sm font-bold rounded-full border border-white/30 transition-all">
                 Get Started
-              </button>
-              <button className="w-full py-2 text-black/90 hover:text-black font-medium text-sm transition-colors">
+              </Link>
+              <Link href= "/register" className="w-full py-2 text-black/90 hover:text-black font-medium text-sm transition-colors">
                 Login
-              </button>
+              </Link>
             </div>
           </div>
         )}
