@@ -4,11 +4,11 @@ import { queryClient } from '../helpers/react-query';
 const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export const apiClient = axios.create({
-  baseURL,
+  baseURL: `${baseURL}`,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // For CSRF if using session auth
+  withCredentials: false,
 });
 
 // Request interceptor for auth token

@@ -1,6 +1,6 @@
 import { apiClient } from './apiClient';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
+import toast from 'react-hot-toast';
 // Define all your types
 type TokenResponse = {
   access: string;
@@ -18,10 +18,10 @@ type User = {
   is_superuser?: boolean;
 };
 
-type LoginData = {
-  username: string;
-  password: string;
-};
+// type LoginData = {
+//   username: string;
+//   password: string;
+// };
 
 type RegisterData = {
   username: string;
@@ -37,11 +37,17 @@ type ApiError = {
   details?: Record<string, unknown>;
 };
 
+type LoginCredentials = {
+    username: string;
+    password: string;
+  };
+  
+
 export const authApi = {
-  login: async (data: LoginData): Promise<TokenResponse> => {
-    const response = await apiClient.post<TokenResponse>('/token/', data);
-    return response.data;
-  },
+    login: async (credentials: LoginCredentials): Promise<TokenResponse> => {
+        const response = await apiClient.post('/token/', credentials);
+        return response.data;
+        },
   register: async (data: RegisterData): Promise<User> => {
     const response = await apiClient.post<User>('/users/', data);
     return response.data;
@@ -57,18 +63,23 @@ export const authApi = {
 };
 
 // React Query hooks
+
 export const useLogin = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation<TokenResponse, ApiError, LoginData>({
-    mutationFn: authApi.login,
-    onSuccess: (data) => {
-      localStorage.setItem('access', data.access);
-      localStorage.setItem('refresh', data.refresh);
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
-    },
-  });
-};
+    const queryClient = useQueryClient();
+    
+    return useMutation<TokenResponse, Error, LoginCredentials>({
+      mutationFn: authApi.login,
+      onSuccess: (data) => {
+        localStorage.setItem('access', data.access);
+        localStorage.setItem('refresh', data.refresh);
+        queryClient.invalidateQueries(['currentUser']);
+        toast.success('Login successful!');
+      },
+      onError: (error) => {
+        toast.error(error.message || 'Login failed');
+      }
+    });
+  };
 
 export const useCurrentUser = () => {
   return useQuery<User | null, ApiError>({
