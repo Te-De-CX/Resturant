@@ -20,7 +20,7 @@ const Login = () => {
   });
   
   const router = useRouter();
-  const { mutate: login, isLoading } = useLogin();
+  const { mutate: login, isPending } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -108,7 +108,7 @@ const Login = () => {
               </div>
               
               <div className="flex justify-between items-center">
-                <p className="text-white/80 text-sm">Don't have an account?</p>
+                <p className="text-white/80 text-sm">Don&apos;t have an account?</p>
                 <Link 
                   href="/register" 
                   className="text-amber-300 hover:text-amber-200 text-sm font-medium transition-colors"
@@ -120,15 +120,15 @@ const Login = () => {
               
               <button 
                 type="submit" 
-                disabled={isLoading}
+                disabled={isPending}
                 className={`w-full py-3 px-4 ${
-                  isLoading 
+                  isPending 
                     ? 'bg-amber-600 cursor-not-allowed' 
                     : 'bg-amber-500 hover:bg-amber-600'
                 } text-white font-semibold rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg`}
-                aria-disabled={isLoading}
+                aria-disabled={isPending}
               >
-                {isLoading ? 'Signing In...' : 'Sign In'}
+                {isPending ? 'Signing In...' : 'Sign In'}
               </button>
             </form>
           </div>

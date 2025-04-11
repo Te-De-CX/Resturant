@@ -1,3 +1,6 @@
+import Image from "next/image";
+import BgImg from "../../../../public/images/home/map/map.jpg"
+
 const Location = () => {
     return (
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -7,10 +10,17 @@ const Location = () => {
                 </h3>
                 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Google Map Placeholder */}
-                    <div className="h-96 bg-gray-200 rounded-xl overflow-hidden shadow-lg">
-                        <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-600">
-                            Google Map Integration
+                    <div className="h-96 rounded-xl overflow-hidden shadow-lg">
+                        <div className="w-full h-full flex items-center justify-center text-gray-600 relative">
+                            <Image
+                                src={BgImg}
+                                alt="bg"
+                                // fill
+                                className="absolute z-10"
+                            />
+                            <div className="z-20 text-xl font-semibold stroke-black stroke-2 text-stone-900">
+                                Google Map Integration ...
+                            </div>
                         </div>
                     </div>
                     

@@ -1,17 +1,17 @@
 
-const RegisterPage = ({
+const AuthLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
 
-    const register = (
+    const authLayout = (
         <>
           {children}
         </>
     )
 
-    return register;
+    return authLayout;
 }
 
-export default RegisterPage;
+export default AuthLayout;

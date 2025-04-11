@@ -1,24 +1,7 @@
+import { Review, ReviewCreate, ReviewUpdate, ApiError } from '../types/api/reviews';
 import { apiClient } from './apiClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-// Types
-type Review = {
-  id: number;
-  user: number;  // User ID
-  product?: number;  // Product ID (optional)
-  rating: number;
-  comment?: string;
-  review_date: string;
-};
-
-type ReviewCreate = Omit<Review, 'id' | 'review_date'>;
-type ReviewUpdate = Partial<ReviewCreate> & { id: number };
-
-type ApiError = {
-  message: string;
-  status?: number;
-  details?: Record<string, unknown>;
-};
 
 // API Methods
 export const reviewApi = {

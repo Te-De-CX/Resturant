@@ -14,7 +14,7 @@ const Chef = () => {
         </p>
       </div>
       
-      <div className="flex flex-col lg:flex-row my-10 gap-10 mb-20">
+      <div className="flex flex-col lg:flex-row my-10 gap-10 mb-20 px-10">
         <div className="order-2 lg:order-1 lg:w-1/2">
           <p className="text-base md:text-xl">
             It is a long established fact that a reader will be distracted layout. 
@@ -36,7 +36,7 @@ const Chef = () => {
         </div>
         
         <div className="order-1 lg:order-2 lg:w-1/2">
-          <div className="relative w-full h-64 md:h-80 lg:h-[30rem]">
+          <div className="relative w-full h-64 md:h-80 lg:h-[25rem]">
             <Image
               src={Steak}
               alt="Chef image"

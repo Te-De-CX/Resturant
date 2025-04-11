@@ -1,21 +1,7 @@
+import { Chef, ApiError } from "../types/api/chefs"
 import { apiClient } from './apiClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-// Types
-type Chef = {
-  id: number;
-  name: string;
-  profile_picture?: string;
-  description?: string;
-  text?: string;
-  rating?: number;
-};
-
-type ApiError = {
-  message: string;
-  status?: number;
-  details?: Record<string, unknown>;
-};
 
 // API Methods
 export const chefApi = {

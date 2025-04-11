@@ -23,7 +23,7 @@ const Menu = () => {
             </div>
             
             {/* Menu cards grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 sm:px-8 md:px-12 lg:px-24 xl:px-32">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-4 sm:px-8 md:px-12">
                 {card.map((value, index) => (
                     <MenuCard 
                         key={index}

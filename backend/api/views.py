@@ -2,6 +2,9 @@ from rest_framework import viewsets, permissions
 from .models import Products, Order, OrderItem, Category, Payment, Review, Ads, ChefsData
 from .serializers import ProductsSerializer, OrderSerializer, CategorySerializer, PaymentSerializer, ReviewSerializer, AdsSerializer, ChefsDataSerializer, UserSerializer
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 
 User = get_user_model()
@@ -66,3 +69,10 @@ class AdsViewSet(viewsets.ModelViewSet):
     queryset = Ads.objects.all()
     serializer_class = AdsSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)

@@ -1,31 +1,6 @@
+import { Product, ProductCreate, ProductUpdate, ApiError } from '../types/api/products';
 import { apiClient } from './apiClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
-// Define all product-related types
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  category: number;
-  quantity?: number;
-  is_available?: boolean;
-  is_favorite?: boolean;
-  chefs?: number;
-  rating?: number;
-  ingredients?: string;
-  allergens?: string;
-  text?: string;
-};
-
-type ProductCreate = Omit<Product, 'id'>;
-type ProductUpdate = Partial<ProductCreate> & { id: number };
-
-type ApiError = {
-  message: string;
-  details?: Record<string, unknown>;
-};
 
 export const productApi = {
   getProducts: async (): Promise<Product[]> => {
@@ -53,7 +28,6 @@ export const productApi = {
   },
 };
 
-// React Query hooks with proper typing
 export const useProducts = () => {
   return useQuery<Product[], ApiError>({
     queryKey: ['products'],
