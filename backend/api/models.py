@@ -5,7 +5,7 @@ from django.conf import settings
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(
+    image = models.ImageField(
         upload_to='profile_pictures/',
         blank=True,
         null=True
@@ -14,6 +14,11 @@ class CustomUser(AbstractUser):
 class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to='categories/',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.name
@@ -21,6 +26,8 @@ class Category(models.Model):
 class Products(models.Model):
     name = models.CharField(max_length=50)
     price = models.FloatField()
+    old_price = models.FloatField(blank=True, null=True)
+    discount = models.FloatField(blank=True, null=True)
     text = models.TextField(blank=True, null=True)
     ingredients = models.TextField(blank=True, null=True)
     allergens = models.TextField(blank=True, null=True)
@@ -99,3 +106,14 @@ class Ads(models.Model):
 
     def __str__(self):
         return self.title
+    
+class UserFavorites(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)  
+    added_at = models.DateTimeField(auto_now_add=True)  
+
+    class Meta:
+        unique_together = ('user', 'product')  # Prevents duplicate favorites
+
+    def __str__(self):
+        return f"{self.user.username}'s favorite: {self.product.name}"

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, Products, Order, OrderItem, Category, Payment, Review, ChefsData, Ads
+from .models import CustomUser, Products, Order, OrderItem, Category, Payment, Review, ChefsData, Ads, UserFavorites
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -25,6 +25,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductsSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
+    
+    def get_is_favorite(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return UserFavorites.objects.filter(user=request.user, product=obj).exists()
+        return False
     
     class Meta:
         model = Products
@@ -67,3 +73,12 @@ class AdsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ads
         fields = '__all__'
+        
+class UserFavoritesSerializer(serializers.ModelSerializer):
+    product = ProductsSerializer(read_only=True)  # Nested product details
+
+    class Meta:
+        model = UserFavorites
+        fields = ['id', 'product', 'added_at']
+        
+        

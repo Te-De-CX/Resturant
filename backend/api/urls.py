@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ProductsViewSet, OrderViewSet, CategoryViewSet, PaymentViewSet, ReviewViewSet, ChefsDataViewSet, AdsViewSet, UserViewSet, CurrentUserView
+from .views import ProductsViewSet, OrderViewSet, CategoryViewSet, PaymentViewSet, ReviewViewSet,  ToggleFavoriteView, UserFavoritesListView, ChefsDataViewSet, AdsViewSet, UserViewSet, CurrentUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
@@ -15,6 +15,8 @@ router.register(r'ads', AdsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('favorites/', UserFavoritesListView.as_view(), name='user-favorites-list'),
+    path('favorites/toggle/<int:product_id>/', ToggleFavoriteView.as_view(), name='toggle-favorite'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('users/me/', CurrentUserView.as_view(), name='current-user'),

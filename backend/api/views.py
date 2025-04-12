@@ -6,6 +6,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
+from .models import UserFavorites
+from .serializers import UserFavoritesSerializer
 
 User = get_user_model()
 
@@ -76,3 +80,34 @@ class CurrentUserView(APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+    
+class ToggleFavoriteView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserFavoritesSerializer
+
+    def post(self, request, product_id):
+        try:
+            product = Products.objects.get(id=product_id)
+        except Products.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        favorite, created = UserFavorites.objects.get_or_create(
+            user=request.user,
+            product=product
+        )
+
+        if not created:
+            favorite.delete()
+            return Response({"status": "removed from favorites"}, status=status.HTTP_200_OK)
+
+        return Response(
+            UserFavoritesSerializer(favorite, context={'request': request}).data,
+            status=status.HTTP_201_CREATED
+        )
+
+class UserFavoritesListView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserFavoritesSerializer
+
+    def get_queryset(self):
+        return UserFavorites.objects.filter(user=self.request.user)
