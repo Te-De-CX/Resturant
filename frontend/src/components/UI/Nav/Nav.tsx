@@ -13,6 +13,7 @@ const Nav: React.FC = () => {
     { id: 2, name: "about", link: "/about"  },
     { id: 3, name: "menu", link: "/menu"  },
     { id: 4, name: "resturants",  link: "/resturants" },
+    { id: 5, name: "payment",  link: "/payment" },
   ];
 
   return (

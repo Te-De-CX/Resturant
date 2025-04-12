@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'username', 'email', 'password',
             'first_name', 'last_name', 'phone_number',
-            'address', 'profile_picture'
+            'address', 'image'
         ]
         extra_kwargs = {
             'password': {'write_only': True},
@@ -31,6 +31,19 @@ class ProductsSerializer(serializers.ModelSerializer):
         if request and request.user.is_authenticated:
             return UserFavorites.objects.filter(user=request.user, product=obj).exists()
         return False
+    
+    def get_photo_url(self, obj):
+        request = self.context.get('request')
+        photo_url = obj.fingerprint.url
+        return request.build_absolute_url(photo_url)
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.image:
+            representation['image'] = self.context['request'].build_absolute_uri(instance.image.url)
+        else:
+            representation['image'] = None
+        return representation
     
     class Meta:
         model = Products

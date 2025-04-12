@@ -10,6 +10,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from .models import UserFavorites
 from .serializers import UserFavoritesSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 User = get_user_model()
 
@@ -37,6 +38,12 @@ class ProductsViewSet(viewsets.ModelViewSet):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = ( MultiPartParser, FormParser )
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
