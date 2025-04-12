@@ -1,0 +1,11 @@
+export { default as Image1 } from '../../../../../../public/images/home/marquee/image13.jpg';
+export { default as Image2 } from '../../../../../../public/images/home/marquee/image3.png';
+export { default as Image3 } from '../../../../../../public/images/home/marquee/image2.jpg';
+export { default as Image4 } from '../../../../../../public/images/home/marquee/image6.jpg';
+export { default as Image5 } from '../../../../../../public/images/home/marquee/image9.png';
+export { default as Image6 } from '../../../../../../public/images/home/marquee/image5.jpg';
+export { default as Image7 } from '../../../../../../public/images/home/marquee/image7.jpg';
+export { default as Image8 } from '../../../../../../public/images/home/marquee/image12.jpg';
+export { default as Image9 } from '../../../../../../public/images/home/marquee/image4.png';
+export { default as Image10 } from '../../../../../../public/images/home/marquee/image1.png';
+export { default as Image11 } from '../../../../../../public/images/home/marquee/image10.jpg';

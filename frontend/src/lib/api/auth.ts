@@ -28,14 +28,11 @@ export const authApi = {
     localStorage.removeItem('refresh');
   },
   getCurrentUser: async (): Promise<CurrentUser> => {
-    // Get user ID from JWT
     const token = localStorage.getItem('access');
     if (!token) throw new Error('No access token');
     
     const decoded: { user_id: number } = jwtDecode(token);
     const userId = decoded.user_id;
-
-    // Fetch specific user
     const response = await apiClient.get<CurrentUser>(`/users/${userId}/`);
     return response.data;
   },
