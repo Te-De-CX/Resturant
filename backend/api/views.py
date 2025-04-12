@@ -11,6 +11,12 @@ from rest_framework.response import Response
 from .models import UserFavorites
 from .serializers import UserFavoritesSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from .models import Cart, CartItem
+from .serializers import CartSerializer, CartItemSerializer
 
 User = get_user_model()
 
@@ -118,3 +124,44 @@ class UserFavoritesListView(generics.ListAPIView):
 
     def get_queryset(self):
         return UserFavorites.objects.filter(user=self.request.user)
+    
+class CartViewSet(viewsets.ModelViewSet):
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def add_item(self, request, pk=None):
+        cart = self.get_object()
+        serializer = CartItemSerializer(data=request.data)
+        if serializer.is_valid():
+            product = serializer.validated_data['product']
+            quantity = serializer.validated_data.get('quantity', 1)
+            
+            # Update quantity if item exists
+            cart_item, created = CartItem.objects.get_or_create(
+                cart=cart,
+                product=product,
+                defaults={'quantity': quantity}
+            )
+            
+            if not created:
+                cart_item.quantity += quantity
+                cart_item.save()
+            
+            return Response(CartSerializer(cart).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['post'])
+    def remove_item(self, request, pk=None):
+        cart = self.get_object()
+        product_id = request.data.get('product_id')
+        
+        try:
+            cart_item = CartItem.objects.get(cart=cart, product_id=product_id)
+            cart_item.delete()
+            return Response(CartSerializer(cart).data)
+        except CartItem.DoesNotExist:
+            return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)

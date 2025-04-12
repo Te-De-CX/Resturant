@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, Products, Order, OrderItem, Category, Payment, Review, ChefsData, Ads, UserFavorites
+from .models import CustomUser, Products, Order, OrderItem, Category, Payment, Review, ChefsData, Ads, UserFavorites, Cart, CartItem
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -94,4 +94,20 @@ class UserFavoritesSerializer(serializers.ModelSerializer):
         model = UserFavorites
         fields = ['id', 'product', 'added_at']
         
-        
+class CartItemSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Products.objects.all())
+    
+    class Meta:
+        model = CartItem
+        fields = ['id', 'product', 'quantity']
+
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True, read_only=True)
+    total = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Cart
+        fields = ['id', 'items', 'total', 'created_at', 'updated_at']
+
+    def get_total(self, obj):
+        return sum(item.product.price * item.quantity for item in obj.items.all())

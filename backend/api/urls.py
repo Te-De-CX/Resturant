@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ProductsViewSet, OrderViewSet, CategoryViewSet, PaymentViewSet, ReviewViewSet,  ToggleFavoriteView, UserFavoritesListView, ChefsDataViewSet, AdsViewSet, UserViewSet, CurrentUserView
+from .views import ProductsViewSet, OrderViewSet, CategoryViewSet, PaymentViewSet, ReviewViewSet,  ToggleFavoriteView, UserFavoritesListView, ChefsDataViewSet, AdsViewSet, UserViewSet, CurrentUserView, CartViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
@@ -12,6 +12,7 @@ router.register(r'payments', PaymentViewSet)
 router.register(r'reviews', ReviewViewSet)
 router.register(r'chefsdata', ChefsDataViewSet)
 router.register(r'ads', AdsViewSet)
+router.register(r'carts', CartViewSet, basename='cart')
 
 urlpatterns = [
     path('', include(router.urls)),
