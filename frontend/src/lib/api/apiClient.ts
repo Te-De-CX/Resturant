@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosRequestConfig } from 'axios';
 import { queryClient } from '../helpers/react-query';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
 export const apiClient = axios.create({
   baseURL: `${baseURL}`,

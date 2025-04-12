@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 'use client';
 
 import { useCurrentUser } from '@/lib/api/auth';

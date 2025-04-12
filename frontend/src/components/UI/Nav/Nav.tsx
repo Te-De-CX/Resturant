@@ -28,7 +28,7 @@ const Nav: React.FC = () => {
               alt="Logo" 
               className="filter drop-shadow-md flex justify-center items-center"
             />
-            <h5 className="hidden sm:flex flex-col text-md capitalize font-bold text-black drop-shadow-md">
+            <h5 className="hidden sm:flex flex-col text-md capitalize font-bold text-black">
               <span className="leading-4">tamang</span>
               <span className="">foodService</span>
             </h5>

@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* globals.css */
+.food-card-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .food-card-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  input, input:focus, input:-webkit-autofill, input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, input:-webkit-autofill:active {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important; /* For Chrome autofill */
+    box-shadow: 0 0 0 30px transparent inset !important; /* For Firefox autofill */
+    color: inherit; /* Optional: Ensures text color stays consistent */
+}
