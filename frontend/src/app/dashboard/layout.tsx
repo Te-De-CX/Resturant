@@ -23,7 +23,6 @@ export default function DashboardLayout({
   return (
     <ProtectedRoute>
       <DashboardNav />
-      {/* Content area padding adjustment */}
       <div className={`${!isMobile ? 'ml-64' : 'pb-16'} min-h-screen transition-all`}>
         {children}
       </div>

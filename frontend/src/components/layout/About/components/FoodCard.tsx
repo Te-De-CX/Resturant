@@ -3,27 +3,17 @@ import { FoodCardProp } from "@/lib/types/about";
 
 const FoodCard: React.FC<FoodCardProp> = ({ title, img, text }) => {
     return (
-        <div className="group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <div className="aspect-w-3 aspect-h-2 w-full">
+        <div className="grid grid-cols-2 items-center" >
+            <div className="h-[30rem] w-[35rem] overflow-hidden flex items-center rounded-2xl">
                 <Image
                     src={img}
                     alt={title}
-                    width={400}
-                    height={300}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover rounded-2xl"
                 />
             </div>
-            
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            
-            <div className="absolute bottom-0 left-0 p-6 text-white opacity-0 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 group-hover:opacity-100">
-                <h5 className="mb-2 text-xl font-bold tracking-tight">{title}</h5>
-                <p className="text-sm font-light line-clamp-2">{text}</p>
-            </div>
-            
-            <div className="bg-white p-4">
-                <h5 className="mb-1 text-lg font-semibold text-gray-900 truncate">{title}</h5>
-                <p className="text-sm text-gray-600 line-clamp-2">{text}</p>
+            <div className="flex flex-col gap-2" >
+                <h5 className="text-3xl font-semibold capitalize mb-2" >{title}</h5>
+                <p className="text-xl leading-8 font-light" >{text}</p>
             </div>
         </div>
     );

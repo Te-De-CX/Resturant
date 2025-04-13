@@ -1,5 +1,5 @@
 'use client';
-// import Image from "next/image";
+import Image from "next/image";
 import { useProducts } from "@/lib/api/products";
 import AddToCartButton from "@/components/examples/AddToCart";
 // import { FiShoppingCart } from "react-icons/fi";
@@ -18,7 +18,7 @@ const Template = () => {
           <div key={product.id} className="border rounded-lg p-4 shadow-md flex flex-col">
             {product.image && (
               <div className="relative h-48 w-full">
-                {/* <Image
+                <Image
                   src={product.image}
                   alt={product.name}
                   fill
@@ -29,7 +29,7 @@ const Template = () => {
                     target.onerror = null;
                     target.src = '/fallback-image.jpg';
                   }}
-                /> */}
+                />
               </div>
             )}
             <h3 className="text-xl font-semibold mt-2">{product.name}</h3>

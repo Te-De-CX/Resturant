@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
 class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(
+    image = models.ImageField(
         upload_to='categories/',
         blank=True,
         null=True

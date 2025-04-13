@@ -12,6 +12,7 @@ type CartItem = {
 type CartStore = {
   items: CartItem[];
   addToCart: (product: Omit<CartItem, 'quantity'>) => void;
+  subFromCart: (productId: number) => void; // Changed to accept just ID
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
@@ -28,7 +29,6 @@ export const useCartStore = create<CartStore>()(
         const existingItem = items.find((item) => item.id === product.id);
 
         if (existingItem) {
-          // Increase quantity if item exists
           set({
             items: items.map((item) =>
               item.id === product.id
@@ -37,10 +37,32 @@ export const useCartStore = create<CartStore>()(
             ),
           });
         } else {
-          // Add new item
           set({ items: [...items, { ...product, quantity: 1 }] });
         }
-        // Update total
+        set({ total: calculateTotal(get().items) });
+      },
+      // New subFromCart implementation
+      subFromCart: (productId) => {
+        const { items } = get();
+        const existingItem = items.find((item) => item.id === productId);
+        
+        if (!existingItem) return;
+
+        if (existingItem.quantity > 1) {
+          // Decrease quantity if more than 1
+          set({
+            items: items.map((item) =>
+              item.id === productId
+                ? { ...item, quantity: item.quantity - 1 }
+                : item,
+            ),
+          });
+        } else {
+          // Remove item if quantity would become 0
+          set({
+            items: items.filter((item) => item.id !== productId),
+          });
+        }
         set({ total: calculateTotal(get().items) });
       },
       removeFromCart: (id) => {
@@ -62,11 +84,10 @@ export const useCartStore = create<CartStore>()(
       clearCart: () => set({ items: [], total: 0 }),
     }),
     {
-      name: 'cart-storage', // Key for localStorage
+      name: 'cart-storage',
     },
   ),
 );
 
-// Helper to calculate cart total
 const calculateTotal = (items: CartItem[]) =>
   items.reduce((sum, item) => sum + item.price * item.quantity, 0);

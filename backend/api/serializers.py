@@ -26,6 +26,11 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+        
+    def get_photo_url(self, obj):
+        request = self.context.get('request')
+        photo_url = obj.fingerprint.url
+        return request.build_absolute_url(photo_url)
 
 class ProductsSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)

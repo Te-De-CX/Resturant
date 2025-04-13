@@ -17,7 +17,7 @@
   input, input:focus, input:-webkit-autofill, input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, input:-webkit-autofill:active {
     background-color: transparent !important;
-    -webkit-box-shadow: 0 0 0 30px transparent inset !important; /* For Chrome autofill */
-    box-shadow: 0 0 0 30px transparent inset !important; /* For Firefox autofill */
-    color: inherit; /* Optional: Ensures text color stays consistent */
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important; 
+    box-shadow: 0 0 0 30px transparent inset !important; 
+    color: inherit; 
 }
