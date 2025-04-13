@@ -3,9 +3,9 @@ import { reviewsData } from "@/lib/data/home/reviews/data";
 
 const Reviews = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-7xl mx-auto">
-        <h3 className="text-center text-3xl sm:text-4xl font-bold text-white mb-12">
+        <h3 className="text-center text-3xl sm:text-4xl font-bold text-black mb-12">
           What Our <span className="text-yellow-400">Clients</span> Are Saying
         </h3>
         

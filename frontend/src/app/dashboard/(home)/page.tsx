@@ -1,5 +1,6 @@
 'use client';
 
+import HomeCart from '@/components/layout/Cart/HomeCart';
 import { useCurrentUser } from '@/lib/api/auth';
 
 export default function Dashboard() {
@@ -45,6 +46,7 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+        <HomeCart />
       </div>
     </div>
   );

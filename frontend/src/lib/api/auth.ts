@@ -17,7 +17,7 @@ export const authApi = {
     const response = await apiClient.post<{
       access: string;
       refresh: string;
-    }>('/register/', userData);
+    }>('/users/', userData);
     return {
       access: response.data.access,
       refresh: response.data.refresh,

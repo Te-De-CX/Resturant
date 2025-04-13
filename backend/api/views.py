@@ -165,3 +165,4 @@ class CartViewSet(viewsets.ModelViewSet):
             return Response(CartSerializer(cart).data)
         except CartItem.DoesNotExist:
             return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+        
