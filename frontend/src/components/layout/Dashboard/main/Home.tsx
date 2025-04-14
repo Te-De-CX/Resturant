@@ -1,6 +1,7 @@
 'use client';
 
 import Categories from './components/Categories';
+import History from './components/History';
 // import HomeCart from '@/components/layout/Cart/HomeCart';
 import { useCurrentUser } from '@/lib/api/auth';
 import Orders from './components/Orders';
@@ -10,7 +11,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col md:flex-row w-full overflow-x-hidden">
-      <div className="py-6  w-full md:w-auto md:flex-1 md:min-w-0"> 
+      <div className="py-6 mr-80  w-full md:w-auto md:flex-1 md:min-w-0"> 
         {user && (
           <div className="space-y-4 px-4 md:px-8"> 
             <div className="flex items-center space-x-4">
@@ -27,6 +28,9 @@ export default function Dashboard() {
           <HomeCart />
         </div> */}
         <Categories />
+        <div className='px-8'>
+          <History />
+        </div>
       </div>
       <div className="w-full md:w-auto md:flex-shrink-0" >
         <Orders />

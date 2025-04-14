@@ -5,7 +5,7 @@ import HomeCart from "@/components/layout/Cart/HomeCart";
 
 const Orders = () => {
   return (
-    <section className="relative h-screen w-80 overflow-hidden">
+    <section className="fixed right-0 top-0 z-50 h-screen w-80 overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
           src={Bg}
@@ -19,7 +19,7 @@ const Orders = () => {
       <div className="relative h-full w-full flex flex-col items-center justify-center p-4 gap-4">
         <div className="bg-[#868686] bg-opacity-20 text-white p-6 rounded-xl border-2 border-white backdrop-blur-2xl">
             <h3 className="text-xl  capitalize font-bold text-center mb-4">your meal planner</h3>
-            <div className="flex flex-col p-3 rounded-xl overflow-hidden relative bg-[#191919] bg-opacity-30">
+            <div className="flex flex-col px-3 py-2 rounded-xl overflow-hidden relative bg-[#191919] bg-opacity-30">
                 <div className="absolute inset-0 -z-10">
                     <Image
                     src={Img}

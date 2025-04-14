@@ -20,6 +20,7 @@
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.6.5",
     "google-maps": "^4.3.3",
     "googlemaps": "^1.12.0",

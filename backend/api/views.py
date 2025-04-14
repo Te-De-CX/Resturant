@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
 from .models import Products, Order, OrderItem, Category, Payment, Review, Ads, ChefsData
-from .serializers import ProductsSerializer, OrderSerializer, CategorySerializer, PaymentSerializer, ReviewSerializer, AdsSerializer, ChefsDataSerializer, UserSerializer
+from .serializers import ProductsSerializer, OrderSerializer, CategorySerializer, PaymentSerializer, ReviewSerializer, AdsSerializer, OrderItemSerializer, ChefsDataSerializer, UserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -69,6 +69,15 @@ class OrderViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+class OrderItemViewSet(viewsets.ModelViewSet):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
