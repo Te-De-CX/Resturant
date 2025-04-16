@@ -1,7 +1,7 @@
+// orderApi.ts
 import { apiClient } from './apiClient';
 import { Order, CreateOrderData } from '../types/api/orders';
 
-// API Methods
 export const orderApi = {
   getAllOrders: async (): Promise<Order[]> => {
     const response = await apiClient.get<Order[]>('/orders/');
@@ -13,13 +13,12 @@ export const orderApi = {
     return response.data;
   },
 
-  getOrdersByUser: async (userId: number): Promise<Order[]> => {
-    const response = await apiClient.get<Order[]>(`/orders/?user_id=${userId}`);
-    return response.data;
-  },
-
   createOrder: async (orderData: CreateOrderData): Promise<Order> => {
-    const response = await apiClient.post<Order>('/orders/', orderData);
+    const response = await apiClient.post<Order>('/orders/', {
+      user: orderData.user,
+      items: orderData.items,
+      total: orderData.total,
+    });
     return response.data;
   },
 
@@ -27,8 +26,4 @@ export const orderApi = {
     const response = await apiClient.patch<Order>(`/orders/${id}/`, { status });
     return response.data;
   },
-
-  deleteOrder: async (id: number): Promise<void> => {
-    await apiClient.delete(`/orders/${id}/`);
-  }
 };

@@ -5,25 +5,51 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { useState } from 'react';
 import { useCreateOrder } from '@/lib/hooks/useOrders';
 import { useRouter } from 'next/navigation';
-import { useCreateOrderItems } from '@/lib/hooks/useOrderItems';
-// import { Loader } from '@/components/ui/loader';
+
+// Define types for our component
+type Country = 'United States' | 'Canada' | 'United Kingdom' | 'Germany' | 'France';
+type CardType = 'Visa' | 'MasterCard' | 'American Express' | 'Discover';
+
+type StatesType = {
+  [key in Country]: string[];
+};
+
+type FormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  cardNumber: string;
+  expiryDate: string;
+  cvv: string;
+  cardName: string;
+};
+
+const countries: Country[] = ['United States', 'Canada', 'United Kingdom', 'Germany', 'France'];
+const states: StatesType = {
+  'United States': ['California', 'New York', 'Texas', 'Florida', 'Illinois'],
+  'Canada': ['Ontario', 'Quebec', 'British Columbia', 'Alberta'],
+  'United Kingdom': ['England', 'Scotland', 'Wales', 'Northern Ireland'],
+  'Germany': ['Bavaria', 'Berlin', 'Hamburg', 'Hesse'],
+  'France': ['Île-de-France', 'Provence-Alpes-Côte d\'Azur', 'Auvergne-Rhône-Alpes']
+};
+const cardTypes: CardType[] = ['Visa', 'MasterCard', 'American Express', 'Discover'];
 
 const StripeForm = () => {
-  const { loading, user } = useProtectedRoute();
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedState, setSelectedState] = useState('');
-  const [selectedCard, setSelectedCard] = useState('');
+  const { loading: authLoading, user } = useProtectedRoute();
+  const [selectedCountry, setSelectedCountry] = useState<Country | ''>('');
+  const [selectedState, setSelectedState] = useState<string>('');
+  const [selectedCard, setSelectedCard] = useState<CardType | ''>('');
   const { items, total, clearCart } = useCartStore();
   const createOrder = useCreateOrder();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Form data state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
-    email: '',
+    email: user?.email || '',
     address: '',
     cardNumber: '',
     expiryDate: '',
@@ -31,19 +57,20 @@ const StripeForm = () => {
     cardName: ''
   });
 
-  // Sample data for dropdowns
-  const countries = ['United States', 'Canada', 'United Kingdom', 'Germany', 'France'];
-  const states = {
-    'United States': ['California', 'New York', 'Texas', 'Florida', 'Illinois'],
-    'Canada': ['Ontario', 'Quebec', 'British Columbia', 'Alberta'],
-    'United Kingdom': ['England', 'Scotland', 'Wales', 'Northern Ireland'],
-    'Germany': ['Bavaria', 'Berlin', 'Hamburg', 'Hesse'],
-    'France': ['Île-de-France', 'Provence-Alpes-Côte d\'Azur', 'Auvergne-Rhône-Alpes']
-  };
-  const cardTypes = ['Visa', 'MasterCard', 'American Express', 'Discover'];
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Type guard for select elements
+    if (name === 'country' && (countries.includes(value as Country) || value === '')) {
+      setSelectedCountry(value as Country | '');
+      return;
+    }
+    
+    if (name === 'cardType' && (cardTypes.includes(value as CardType) || value === '')) {
+      setSelectedCard(value as CardType | '');
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -52,57 +79,42 @@ const StripeForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form
+    if (!selectedCountry || !selectedState || !selectedCard) {
+      setError('Please fill all required fields');
+      return;
+    }
+    
+    if (items.length === 0) {
+      setError('Your cart is empty');
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
 
     try {
-      // 1. Create the order
       const order = await createOrder.mutateAsync({
+        user: user?.id || 0, // Make sure to include user ID
         items: items.map(item => ({
           product: item.id,
-          quantity: item.quantity
+          quantity: item.quantity,
+          price: item.price // Make sure to include price
         })),
         total,
       });
-      const OrderItem = await createore.mutateAsync({
-        items: items.map(item => ({
-          product: item.id,
-          quantity: item.quantity
-        })),
-        total,
-      });
-
-      // 2. Record payment (simulated since not using Stripe)
-      // const paymentResponse = await fetch('/api/payments/', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Authorization': `Bearer ${localStorage.getItem('token')}`
-      //   },
-      //   body: JSON.stringify({
-      //     orderId: order.id,
-      //     amount: total,
-      //     paymentMethod: selectedCard,
-      //     cardLastFour: formData.cardNumber.slice(-4)
-      //   })
-      // });
-
-      // if (!paymentResponse.ok) {
-      //   throw new Error('Failed to record payment');
-      // }
-
-      // // 3. Clear cart and redirect
-      // clearCart();
-      // router.push(`/checkout/success?order_id=${order.id}`);
-
+      
+      clearCart();
+      router.push(`/checkout/success?order_id=${order.id}`);
     } catch (err) {
-      setError(err.message || 'Payment processing failed');
+      setError(err instanceof Error ? err.message : 'Payment processing failed');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  if (loading) {
+  if (authLoading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -150,7 +162,6 @@ const StripeForm = () => {
             onChange={handleInputChange}
             placeholder="john@example.com"
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-            defaultValue={user?.email || ''}
             required
           />
         </div>
@@ -159,8 +170,9 @@ const StripeForm = () => {
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700">Country</label>
             <select
+              name="country"
               value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
+              onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               required
             >
@@ -173,6 +185,7 @@ const StripeForm = () => {
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700">State/Province</label>
             <select
+              name="state"
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
@@ -204,8 +217,9 @@ const StripeForm = () => {
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700">Card Type</label>
             <select
+              name="cardType"
               value={selectedCard}
-              onChange={(e) => setSelectedCard(e.target.value)}
+              onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               required
             >
@@ -267,7 +281,7 @@ const StripeForm = () => {
             />
           </div>
         </div>
-
+        
         <div className="border-t pt-4">
           <div className="flex justify-between items-center mb-2">
             <span className="text-gray-600">Subtotal:</span>
@@ -297,14 +311,7 @@ const StripeForm = () => {
                 : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg'
             }`}
           >
-            {isProcessing ? (
-              <div className="flex items-center justify-center">
-                {/* <Loader className="mr-2" size={20} /> */}
-                Processing...
-              </div>
-            ) : (
-              `Pay Now $${total.toFixed(2)}`
-            )}
+            {isProcessing ? 'Processing...' : `Pay Now $${total.toFixed(2)}`}
           </button>
         </div>
       </form>

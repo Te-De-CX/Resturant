@@ -35,15 +35,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f_(f6=qfbha@(fp9n7uw#1*c9^@d97z!cl+=3sq9xo1f@ap83q'
+SECRET_KEY = 'django-insecure-ls3ao)n7e3hag11&dlk5%@s_+1ua-%(%*rb81=0(*hmip39^d0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Add to settings.py:
 AUTH_USER_MODEL = 'api.CustomUser'
 
 # Application definition
@@ -62,9 +60,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Add this line
-    'django.middleware.common.CommonMiddleware',  # This should come after CorsMiddleware
-    # ... rest of your middleware
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -146,7 +143,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Add to settings.py
+
+
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Your Next.js frontend
     "http://127.0.0.1:3000",
@@ -168,3 +167,5 @@ SIMPLE_JWT = {
 # settings.py
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# SECURE_SSL_REDIRECT = True

@@ -1,3 +1,4 @@
+// useOrders.ts
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { orderApi } from '../api/orders';
 import { Order, CreateOrderData, ApiError } from '../types/api/orders';
@@ -17,28 +18,12 @@ export const useOrder = (id: number) => {
   });
 };
 
-export const useUserOrders = (userId?: number) => {
-    return useQuery<Order[], ApiError>({
-      queryKey: ['orders', 'user', userId],
-      queryFn: async () => {
-        const allOrders = await orderApi.getAllOrders();
-        // Filter client-side by user ID
-        return userId 
-          ? allOrders.filter(order => order.user.id === userId) 
-          : [];
-      },
-      enabled: !!userId, // Only fetch if userId exists
-    });
-  };
-
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
-  
   return useMutation<Order, ApiError, CreateOrderData>({
     mutationFn: orderApi.createOrder,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      queryClient.invalidateQueries({ queryKey: ['userOrders'] });
     },
   });
 };
@@ -51,19 +36,20 @@ export const useUpdateOrderStatus = () => {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
       queryClient.invalidateQueries({ queryKey: ['order', variables.id] });
-      queryClient.invalidateQueries({ queryKey: ['userOrders'] });
     },
   });
 };
 
-export const useDeleteOrder = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation<void, ApiError, number>({
-    mutationFn: orderApi.deleteOrder,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['orders'] });
-      queryClient.invalidateQueries({ queryKey: ['userOrders'] });
+export const useUserOrders = (userId?: number) => {
+  return useQuery<Order[], ApiError>({
+    queryKey: ['orders', 'user', userId],
+    queryFn: async () => {
+      const allOrders = await orderApi.getAllOrders();
+      // Filter client-side by user ID
+      return userId 
+        ? allOrders.filter(order => order.user.id === userId) 
+        : [];
     },
+    enabled: !!userId, // Only fetch if userId exists
   });
 };

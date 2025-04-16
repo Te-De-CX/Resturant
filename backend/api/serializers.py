@@ -59,20 +59,34 @@ class ProductsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = ProductsSerializer(read_only=True)
+    product = serializers.PrimaryKeyRelatedField(queryset=Products.objects.all())
     
     class Meta:
         model = OrderItem
-        fields = '__all__'
+        fields = ['product', 'quantity', 'price']
 
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True, read_only=True)
-    user = UserSerializer(read_only=True)
+    items = OrderItemSerializer(many=True)
     
     class Meta:
         model = Order
-        fields = '__all__'
-
+        fields = ['id', 'user', 'order_date', 'status', 'total', 'items']
+        read_only_fields = ['order_date', 'user']
+    
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
+        
+        for item_data in items_data:
+            OrderItem.objects.create(
+                order=order,
+                product_id=item_data['product'].id,  # Explicitly use product_id
+                quantity=item_data['quantity'],
+                price=item_data['price']
+            )
+        
+        return order 
+    
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment

@@ -1,5 +1,6 @@
 'use client';
 
+import Ads from './components/Ads';
 import Categories from './components/Categories';
 import History from './components/History';
 // import HomeCart from '@/components/layout/Cart/HomeCart';
@@ -27,6 +28,7 @@ export default function Dashboard() {
         {/* <div className="px-4 md:px-8">
           <HomeCart />
         </div> */}
+        <Ads />
         <Categories />
         <div className='px-8'>
           <History />
