@@ -132,12 +132,31 @@ class ToggleFavoriteView(generics.GenericAPIView):
             status=status.HTTP_201_CREATED
         )
 
-class UserFavoritesListView(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+class UserFavoritesViewSet(viewsets.ModelViewSet):
     serializer_class = UserFavoritesSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return UserFavorites.objects.filter(user=self.request.user)
+
+    @action(detail=False, methods=['get'])
+    def my_favorites(self, request):
+        favorites = self.get_queryset()
+        serializer = self.get_serializer(favorites, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post', 'delete'])
+    def toggle_favorite(self, request, pk=None):
+        product_id = pk
+        user = request.user
+        favorite, created = UserFavorites.objects.get_or_create(
+            user=user,
+            product_id=product_id
+        )
+        if not created:
+            favorite.delete()
+            return Response({'status': 'removed'})
+        return Response({'status': 'added'})
     
 class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializer

@@ -111,11 +111,12 @@ class AdsSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class UserFavoritesSerializer(serializers.ModelSerializer):
-    product = ProductsSerializer(read_only=True)  # Nested product details
-
+    product = ProductsSerializer(read_only=True)
+    
     class Meta:
         model = UserFavorites
-        fields = ['id', 'product', 'added_at']
+        fields = ['id', 'user', 'product', 'added_at']
+        read_only_fields = ['user', 'added_at']
         
 class CartItemSerializer(serializers.ModelSerializer):
     product = serializers.PrimaryKeyRelatedField(queryset=Products.objects.all())
