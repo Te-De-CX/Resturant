@@ -1,13 +1,14 @@
 'use client';
 import { useFavorites } from "@/lib/hooks/useFavorites";
-import { useSession } from "next-auth/react";
-import ProductCard from "@/components/products/ProductCard";
+// import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/lib/api/auth";
+import ProductCard from "../../../components/examples/ProductCard";
 
 const FavoritesPage = () => {
-  const { data: session } = useSession();
-  const { data: favorites = [], isLoading, error } = useFavorites(session?.user?.id).useGetUserFavorites();
+  const { data: user } = useCurrentUser();
+  const { data: favorites = [], isLoading, error } = useFavorites(user?.id).useGetUserFavorites();
 
-  if (!session) {
+  if (!user) {
     return <div className="p-4">Please sign in to view your favorites</div>;
   }
 
@@ -27,7 +28,7 @@ const FavoritesPage = () => {
           />
         ))
       ) : (
-        <p className="col-span-full text-center">You haven't added any favorites yet</p>
+        <p className="col-span-full text-center">You haven&apos;t added any favorites yet</p>
       )}
     </div>
   );

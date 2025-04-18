@@ -1,4 +1,5 @@
 import { useUserOrders } from '@/lib/hooks/useOrders';
+import { orderApi } from '@/lib/api/orders';
 import { useCurrentUser } from '@/lib/api/auth';
 import { format, parseISO } from 'date-fns';
 
@@ -9,6 +10,12 @@ const History = () => {
     isLoading, 
     error 
   } = useUserOrders(user?.id);
+  
+  const allOrders = orderApi.getAllOrders();
+
+  // const { 
+  //   data: ordered, 
+  // } = useOrder(1);
 
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Date unavailable';
@@ -33,9 +40,12 @@ const History = () => {
     return (
       <div className="p-4 text-red-500 text-center">
         {error.message || 'Failed to load your order history'}
+        {error.details && <p className="text-sm">{error.details}</p>}
       </div>
     );
   }
+
+  console.log(allOrders)
 
   return (
     <section className="w-full bg-[#191919] min-h-screen text-white p-6">
@@ -58,7 +68,7 @@ const History = () => {
                     </p>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-sm ${
-                    order.status === 'completed' 
+                    order.status.toLowerCase() === 'completed' 
                       ? 'bg-green-900 text-green-300' 
                       : order.status === 'cancelled' 
                         ? 'bg-red-900 text-red-300' 
@@ -72,7 +82,7 @@ const History = () => {
                   <h3 className="font-medium mb-2">Items:</h3>
                   <ul className="space-y-2">
                     {order.items.map((item) => (
-                      <li key={item.id} className="flex justify-between">
+                      <li key={item.product.id} className="flex justify-between">
                         <div className="flex items-center">
                           <span className="text-amber-400 mr-2">×{item.quantity}</span>
                           <span>{item.product.name}</span>

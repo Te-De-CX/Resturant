@@ -1,13 +1,14 @@
 'use client';
 import { useProducts } from "../../../lib/api/products";
 import { useFavorites } from "@/lib/hooks/useFavorites";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";\
+import { useCurrentUser } from "@/lib/api/auth";
 import ProductCard from "../../../components/examples/ProductCard";
 
 const ProductsPage = () => {
-  const { data: session } = useSession();
+  const { data: user } = useCurrentUser();
   const { data: products = [], isLoading, error } = useProducts();
-  const { data: favorites = [] } = useFavorites(session?.user?.id).useGetUserFavorites();
+  const { data: favorites = [] } = useFavorites(user?.id).useGetUserFavorites();
 
   if (isLoading) return <div>Loading products...</div>;
   if (error) return <div>Error loading products: {error.message}</div>;

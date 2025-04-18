@@ -10,7 +10,7 @@ export const useFavorites = (userId?: number) => {
     return useQuery<Product[], Error>({
       queryKey: ['favorites', userId],
       queryFn: async () => {
-        const response = await apiClient.get(`/favorites/my_favorites/`);
+        const response = await apiClient.get(`/favorites/`);
         return response.data.map((fav: any) => fav.product);
       },
       enabled: !!userId,
@@ -21,7 +21,7 @@ export const useFavorites = (userId?: number) => {
   const useToggleFavorite = () => {
     return useMutation({
       mutationFn: async (productId: number) => {
-        const response = await apiClient.post(`/favorites/toggle_favorite/${productId}/`);
+        const response = await apiClient.post(`/favorites/toggle/${productId}/`);
         return response.data;
       },
       onSuccess: () => {

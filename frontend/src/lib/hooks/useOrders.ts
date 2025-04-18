@@ -44,12 +44,12 @@ export const useUserOrders = (userId?: number) => {
   return useQuery<Order[], ApiError>({
     queryKey: ['orders', 'user', userId],
     queryFn: async () => {
+      if (!userId) return [];
       const allOrders = await orderApi.getAllOrders();
-      // Filter client-side by user ID
-      return userId 
-        ? allOrders.filter(order => order.user.id === userId) 
-        : [];
+      return allOrders.filter(order => 
+        order.user === userId
+      );
     },
-    enabled: !!userId, // Only fetch if userId exists
+    enabled: !!userId,
   });
 };

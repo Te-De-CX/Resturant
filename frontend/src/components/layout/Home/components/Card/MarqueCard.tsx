@@ -12,8 +12,8 @@ const MarqueeCard: React.FC<MarqueCardProps> = ({ name, price, img, numberOfStar
     };
 
     return (
-        <article className="rounded-xl bg-[#191919] py-3 text-white px-4 items-center mx-2 shadow-lg hover:shadow-xl transition-shadow duration-300 transform flex">
-            <div className="relative w-24 h-24 rounded-lg overflow-hidden">
+        <article className="rounded-xl bg-[#191919] py-3 text-white px-4 items-center mx-3 shadow-lg hover:shadow-xl transition-shadow duration-300 transform flex">
+            <div className="relative w-24 h-24 overflow-hidden border-2 border-white rounded-full">
                 <Image
                     src={img}
                     alt={name}
@@ -22,11 +22,11 @@ const MarqueeCard: React.FC<MarqueCardProps> = ({ name, price, img, numberOfStar
                     className="rounded-full"
                 />
             </div>
-            <div className="flex flex-col gap-1 flex-grow ml-2">
+            <div className="flex flex-col items-start gap-1 flex-grow ml-3">
                 <h3 className="text-lg font-bold truncate">{name}</h3>
-                <div className="flex justify-between items-center">
-                    <p className="text-md font-bold text-primary">${price.toFixed(2)}</p>
-                    <div className="flex text-lg">
+                <div className="flex justify-between items-start flex-col">
+                    <p className="text-md font-bold text-primary">$ {price.toFixed(2)}</p>
+                    <div className="flex text-xl">
                         {renderStars()}
                     </div>
                 </div>

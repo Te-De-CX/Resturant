@@ -3,7 +3,7 @@ import React from "react";
 import { GrCart } from "react-icons/gr";
 import Image from "next/image";
 
-const MenuCard: React.FC<MenuCardProps> = ({ name, img, text, newPrice, formerPrice }) => {
+const MenuCard: React.FC<MenuCardProps> = ({ name, img, description, newPrice, formerPrice }) => {
     return (
       <div className="bg-[#191919] p-4 rounded-xl h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:translate-y-[-4px]">
         <div className="w-full h-56 overflow-hidden rounded-lg mb-4 relative">
@@ -19,7 +19,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ name, img, text, newPrice, formerPr
         
         <div className="flex flex-col gap-2 flex-grow">
           <h3 className="text-lg font-bold text-[#FBBC05] line-clamp-1">{name}</h3>
-          <p className="text-gray-300 text-sm line-clamp-2 min-h-[2.5rem]">{text}</p>
+          <p className="text-gray-300 text-sm line-clamp-2 min-h-[2.5rem]">{description}</p>
           
           <div className="flex justify-between items-center mt-auto pt-2">
             <div className="flex items-baseline gap-2">

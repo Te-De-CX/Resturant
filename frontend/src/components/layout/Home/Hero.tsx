@@ -22,10 +22,10 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 mt-5">
-          <button className="text-lg sm:text-xl md:text-2xl font-semibold text-white bg-black py-2 px-5 rounded-full capitalize hover:bg-gray-800 transition-colors">
+          <button className="text-lg sm:text-xl md:text-2xl font-semibold text-white bg-black py-2 px-10 rounded-full capitalize hover:bg-gray-800 transition-colors">
             order now
           </button>
-          <button className="bg-yellow-400 text-black text-base sm:text-lg font-bold py-2 px-3 uppercase flex items-center justify-center gap-1 hover:bg-yellow-500 transition-colors">
+          <button className="bg-yellow-400 text-black text-base sm:text-lg font-bold py-2 px-5 uppercase flex items-center justify-center gap-1 hover:bg-yellow-500 transition-colors">
             check delivery <RiMotorbikeFill className="text-xl" />
           </button>
         </div>
@@ -55,12 +55,12 @@ const Hero = () => {
           <Image 
             src={Svg2}
             alt="svg2" 
-            className="lg:block absolute left-6  bottom-9  w-[7rem] -z-10"
+            className="lg:block absolute left-6  bottom-9  w-[9rem] -z-10"
           />
           <Image 
             src={Svg3}
             alt="svg3" 
-            className="lg:block absolute right-3 w-[5rem] -z-10"
+            className="lg:block absolute right-3 w-[4rem] -z-10"
           />
         </div>
       </div>

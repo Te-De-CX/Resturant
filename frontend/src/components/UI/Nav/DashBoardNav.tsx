@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { MdDashboard } from "react-icons/md";
 import { BiSolidFoodMenu } from "react-icons/bi";
 import { BsBagHeart } from "react-icons/bs";
@@ -40,11 +41,11 @@ const DashboardNav = () => {
   }, []);
 
   const navItems = [
-    { name: 'Dashboard', icon: MdDashboard, href: '#' },
-    { name: 'Menu', icon: BiSolidFoodMenu, href: '#' },
-    { name: 'Favorite', icon: BsBagHeart, href: '#' },
-    { name: 'History', icon: RiHistoryFill, href: '#' },
-    { name: 'Profile', icon: FaCircleUser, href: '#' },
+    { id:1, name: 'Dashboard', icon: MdDashboard, href: '/dashboard' },
+    { id:2, name: 'Menu', icon: BiSolidFoodMenu, href: '/dashboard/menu' },
+    { id:3, name: 'Favorite', icon: BsBagHeart, href: '/dashboard/favorite' },
+    { id:4, name: 'History', icon: RiHistoryFill, href: '/dashboard/history' },
+    { id:5, name: 'Profile', icon: FaCircleUser, href: '/dashboard/profile' },
     // { name: 'Settings', icon: FiSettings, href: '#' },
   ];
 
@@ -63,21 +64,23 @@ const DashboardNav = () => {
           <div className="p-4 border-b">
             <h1 className="text-xl font-semibold text-white">Dashboard</h1>
           </div>
-          <nav className="p-4">
-            <ul className="space-y-2">
+          <div className='px-2 mt-6'>
+          <nav className="p-4 bg-transparent backdrop-blur-md">
+            <ul className="space-y-3">
               {navItems.map((item) => (
-                <li key={item.name}>
-                  <a
+                <li key={item.id}>
+                  <Link
                     href={item.href}
-                    className="flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors"
+                    className="flex items-center p-3 rounded-lg font-semibold text-white hover:text-yellow-400 transition-colors"
                   >
                     <span>{item.name}</span>
                     <item.icon className="w-5 h-5 ml-3" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
+          </div>
         </aside>
       )}
       {isMobile && (

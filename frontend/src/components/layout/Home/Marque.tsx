@@ -5,8 +5,8 @@ import { marqueeData } from "@/lib/data/home/others/marquee";
 const Marque = () => {
 
     return (
-        <div className="pb-12">
-            <h2 className="text-4xl font-bold text-center text-white mb-8">Our Popular Menu</h2>
+        <div className="pb-12 mt-10">
+            {/* <h2 className="text-4xl font-bold text-center text-white mb-8">Our Popular Menu</h2> */}
             <Marquee 
                 speed={40} 
                 // pauseOnHover={true}

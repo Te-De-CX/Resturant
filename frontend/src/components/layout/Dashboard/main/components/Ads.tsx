@@ -82,7 +82,7 @@ const AdsComponent = () => {
             <button
               key={index}
               onClick={() => setCurrentAdIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${index === currentAdIndex ? 'bg-white w-4' : 'bg-white/50'}`}
+              className={`w-2 h-2 rounded-full transition-all ${index === currentAdIndex ? 'bg-yellow-500 w-4' : 'bg-white/50'}`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}

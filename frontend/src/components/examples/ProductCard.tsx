@@ -3,7 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { FiHeart } from "react-icons/fi";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/lib/api/auth";
 import { useFavorites } from "@/lib/hooks/useFavorites";
 import AddToCartButton from "./AddToCart";
 
@@ -19,13 +20,13 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, isFavorite: initialIsFavorite = false }: ProductCardProps) => {
-  const { data: session } = useSession();
-  const { useToggleFavorite } = useFavorites(session?.user?.id);
+  const { data: user } = useCurrentUser();
+  const { useToggleFavorite } = useFavorites(user?.id);
   const { mutate: toggleFavorite } = useToggleFavorite();
   const [isFavorite, setIsFavorite] = React.useState(initialIsFavorite);
 
   const handleToggleFavorite = () => {
-    if (!session) {
+    if (!user) {
       // Redirect to login or show login modal
       return;
     }
@@ -41,7 +42,7 @@ const ProductCard = ({ product, isFavorite: initialIsFavorite = false }: Product
       {/* Favorite Button */}
       <button
         onClick={handleToggleFavorite}
-        className="absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm"
+        className=" top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         <FiHeart
@@ -55,7 +56,7 @@ const ProductCard = ({ product, isFavorite: initialIsFavorite = false }: Product
             src={product.image}
             alt={product.name}
             fill
-            className="object-cover rounded-t-lg"
+            className="object-cover rounded-t-2xl"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={(e) => {
               const target = e.target as HTMLImageElement;

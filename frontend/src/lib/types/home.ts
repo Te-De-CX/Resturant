@@ -1,9 +1,10 @@
 import { StaticImageData } from "next/image";
 
 export interface MenuCardProps {
+    id?: number,
     name:string,
-    text: string,
-    img: StaticImageData,
+    description?: string,
+    img?: StaticImageData,
     newPrice: number,
     formerPrice: number,
 }

@@ -1,11 +1,13 @@
-// Define all product-related types
+import { StaticImageData } from "next/image";
+import { Category } from "./category";
+
 export type Product = {
   id: number;
   name: string;
   price: number;
   description: string;
-  image: string;
-  category: number;
+  image?: StaticImageData;
+  category: Category;
   quantity?: number;
   is_available?: boolean;
   is_favorite?: boolean;
@@ -14,6 +16,7 @@ export type Product = {
   ingredients?: string;
   allergens?: string;
   text?: string;
+  old_price: number
 };
 
 export type ProductCreate = Omit<Product, 'id'>;

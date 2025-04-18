@@ -14,6 +14,7 @@ router.register(r'chefsdata', ChefsDataViewSet)
 router.register(r'ads', AdsViewSet)
 router.register(r'carts', CartViewSet, basename='cart')
 router.register(r'orderitems', OrderItemViewSet, basename='orderitems')
+router.register(r'favorites', UserFavoritesViewSet, basename='users-favourites' )
 
 urlpatterns = [
     path('', include(router.urls)),

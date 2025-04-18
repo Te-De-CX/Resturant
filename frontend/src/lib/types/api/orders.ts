@@ -17,11 +17,7 @@ export interface CartItem {
 
 export interface Order {
   id: number;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-  };
+  user: number;
   created_at: string;
   status: 'pending' | 'processing' | 'completed' | 'cancelled';
   items: OrderItem[];
@@ -31,7 +27,7 @@ export interface Order {
 }
 
 export interface OrderItem {
-  product: number; // Product ID
+  product: Product; // Product ID
   quantity: number;
   price: number; // Price at time of order
 }

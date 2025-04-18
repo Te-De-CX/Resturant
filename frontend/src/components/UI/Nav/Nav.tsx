@@ -13,15 +13,15 @@ const Nav: React.FC = () => {
     { id: 2, name: "about", link: "/about"  },
     { id: 3, name: "menu", link: "/menu"  },
     { id: 4, name: "resturants",  link: "/resturants" },
-    { id: 5, name: "payment",  link: "/payment" },
+    // { id: 5, name: "payment",  link: "/payment" },
   ];
 
   return (
     <nav className="fixed w-full z-50 bg-white/20 backdrop-blur-xl border-b border-white/30 shadow-lg shadow-black/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-5 py-3">
         <div className="flex justify-between items-center">
           {/* Logo Section */}
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center gap-5">
             <Image 
               width={30} 
               height={30} 
@@ -29,7 +29,7 @@ const Nav: React.FC = () => {
               alt="Logo" 
               className="filter drop-shadow-md flex justify-center items-center"
             />
-            <h5 className="hidden sm:flex flex-col text-md capitalize font-bold text-black">
+            <h5 className="hidden sm:flex flex-col items-center justify-center text-md capitalize font-bold text-black">
               <span className="leading-4">tamang</span>
               <span className="">foodService</span>
             </h5>
@@ -51,10 +51,10 @@ const Nav: React.FC = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex gap-4 items-center">
-            <Link href="/register" className="px-5 py-1.5 bg-white/20 hover:bg-white/30 text-black text-sm font-bold rounded-full border border-white/30 transition-all shadow-sm">
+            <Link href="/register" className="px-5 py-1.5 bg-[#191919] hover:bg-opacity-80 text-yellow-400 text-sm font-bold rounded-full border border-white/30 transition-all shadow-sm">
               Get Started
             </Link>
-            <Link href="/login" className="text-black/90 hover:text-black font-medium text-sm transition-colors">
+            <Link href="/login" className="text-black/90 hover:text-black font-semibold text-sm transition-colors">
               Login
             </Link>
           </div>
