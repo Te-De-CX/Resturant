@@ -14,7 +14,7 @@ export const useProtectedRoute = () => {
   }
 
   if (!items || items.length === 0) {
-    redirect('/cart'); // Redirect to cart if empty
+    redirect('/dashboard'); // Redirect to cart if empty
   }
 
   return { user, items };

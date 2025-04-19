@@ -1,7 +1,8 @@
 'use client';
 
+import { Product } from "@/lib/types/api/products";
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { FiHeart } from "react-icons/fi";
 import { useCurrentUser } from "@/lib/api/auth";
 import { useFavorites } from "@/lib/hooks/useFavorites";
@@ -10,15 +11,7 @@ import { IoMdAdd } from "react-icons/io";
 import { useCartStore } from '@/lib/store/cartStore';
 
 interface ProductCardProps {
-  product: {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    image: StaticImageData;
-    text: string;
-    old_price: number
-  };
+  product: Product ;
   isFavorite?: boolean;
 }
 

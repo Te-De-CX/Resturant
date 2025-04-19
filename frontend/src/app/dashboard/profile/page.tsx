@@ -16,8 +16,8 @@ const ProfilePage = () => {
           <div className="relative h-32 w-32 rounded-full border-4 border-white shadow-lg mb-4">
             {user?.image ? (
               <Image
-                src={user.image}
-                alt={`${user?.name}'s profile`}
+                src={user.email}
+                alt={`${user?.username}'s profile`}
                 fill
                 className="object-cover rounded-full"
               />
@@ -28,7 +28,7 @@ const ProfilePage = () => {
             )}
           </div>
           <h1 className="text-3xl font-bold text-gray-900">
-            {user?.name} {user?.surname}
+            {user?.first_name} {user?.last_name}
           </h1>
           <p className="text-lg text-gray-600 mt-2">{user?.email}</p>
           <button className="mt-4 flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all">

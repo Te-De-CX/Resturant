@@ -5,6 +5,8 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { useState } from 'react';
 import { useCreateOrder } from '@/lib/hooks/useOrders';
 import { useRouter } from 'next/navigation';
+import Lottie from 'lottie-react';
+import successAnimation from '../../../../../../public/lottiefiles/Delivery.json'; // Make sure to add this file
 
 // Define types for our component
 type Country = 'United States' | 'Canada' | 'United Kingdom' | 'Germany' | 'France';
@@ -45,6 +47,8 @@ const StripeForm = () => {
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [orderId, setOrderId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
@@ -60,7 +64,6 @@ const StripeForm = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
-    // Type guard for select elements
     if (name === 'country' && (countries.includes(value as Country) || value === '')) {
       setSelectedCountry(value as Country | '');
       return;
@@ -80,7 +83,6 @@ const StripeForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate form
     if (!selectedCountry || !selectedState || !selectedCard) {
       setError('Please fill all required fields');
       return;
@@ -96,20 +98,25 @@ const StripeForm = () => {
 
     try {
       const order = await createOrder.mutateAsync({
-        user: user?.id || 0, // Make sure to include user ID
+        user: user?.id || 0,
         items: items.map(item => ({
           product: item.id,
           quantity: item.quantity,
-          price: item.price // Make sure to include price
+          price: item.price
         })),
         total,
       });
       
+      setOrderId(order.id);
       clearCart();
-      router.push(`/checkout/success?order_id=${order.id}`);
+      setShowSuccess(true);
+      
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 3000);
+      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Payment processing failed');
-    } finally {
       setIsProcessing(false);
     }
   };
@@ -118,6 +125,25 @@ const StripeForm = () => {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (showSuccess) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white p-8 rounded-lg max-w-md w-full text-center">
+          <div className="w-64 h-64 mx-auto">
+            <Lottie animationData={successAnimation} loop={false} />
+          </div>
+          <h2 className="text-2xl font-bold mb-2 text-gray-800">Payment Successful!</h2>
+          <p className="text-gray-600 mb-6">
+            Your order #{orderId} has been placed successfully.
+          </p>
+          <p className="text-gray-500 text-sm">
+            Redirecting to dashboard...
+          </p>
+        </div>
       </div>
     );
   }

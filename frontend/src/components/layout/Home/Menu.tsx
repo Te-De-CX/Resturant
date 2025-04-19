@@ -32,7 +32,7 @@ const MenuPage = () => {
     setVisibleProducts(prev => prev + 8); // Load 8 more products
   };
 
-  if (error) return <div className="text-center py-10 text-red-500">Error loading products: {error.message}</div>;
+  if (error) return <div className="text-center py-10 text-red-500">Sorry couldnt load products {error.message}</div>;
 
   return (
     <div className="gap-4 p-4 md:p-6 flex flex-col">
@@ -68,7 +68,7 @@ const MenuPage = () => {
                     group rounded-lg
                     ${
                       selectedCategory === category
-                      ? 'text-black font-semibold bg-amber-50'
+                      ? 'text-black font-semibold bg-yellow-50'
                       : ''
                     }
                   `}
@@ -78,7 +78,7 @@ const MenuPage = () => {
                   {/* Active indicator */}
                   <span className={`
                     absolute inset-x-1 -bottom-1 h-1 rounded-full
-                    bg-amber-600 transition-all duration-300
+                    bg-yellow-400 transition-all duration-300
                     ${selectedCategory === category ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}
                   `}></span>
                 </button>
@@ -124,7 +124,7 @@ const MenuPage = () => {
               <div className="flex justify-center mt-8 md:mt-12">
                 <button
                   onClick={loadMoreProducts}
-                  className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
+                  className="px-8 py-3 bg-yellow-500 hover:bg-amber-700 text-black font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
                 >
                   Load More
                 </button>
@@ -136,7 +136,7 @@ const MenuPage = () => {
             <p className="text-lg text-gray-600">No products found in this category</p>
             <button
               onClick={() => setSelectedCategory("all")}
-              className="mt-4 px-6 py-2 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 transition-colors"
+              className="mt-4 px-6 py-2 bg-yellow-400 text-black rounded-lg hover:bg-amber-200 transition-colors"
             >
               View All Products
             </button>

@@ -16,7 +16,7 @@ const Location = () => {
                                 src={BgImg}
                                 alt="bg"
                                 // fill
-                                className="absolute z-10"
+                                className="absolute z-10 w-full h-full"
                             />
                             <div className="z-20 text-xl font-semibold stroke-black stroke-2 text-stone-900">
                                 Google Map Integration ...

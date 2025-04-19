@@ -6,7 +6,7 @@ export type Product = {
   name: string;
   price: number;
   description: string;
-  image?: StaticImageData;
+  image: StaticImageData;
   category: Category;
   quantity?: number;
   is_available?: boolean;

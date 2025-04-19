@@ -1,3 +1,7 @@
+
+import map from '../../../../public/images/home/map/map.jpg'
+import Image from 'next/image';
+
 const Map = () => {
     return (
       <section className="py-12 px-6 bg-gray-50">
@@ -40,9 +44,14 @@ const Map = () => {
             </div>
             
             {/* Map Section */}
-            <div className="lg:w-2/3 h-96 bg-gray-200 rounded-xl overflow-hidden shadow-md">
+            <div className="lg:w-2/3 h-96 bg-gray-200 w-full rounded-xl overflow-hidden shadow-md">
               {/* Replace this div with your actual Google Map component */}
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-primary-400 to-primary-600">
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-primary-400 to-primary-600 relative" >
+                <Image 
+                  src = {map}
+                  alt = "map"
+                  className='object-cover w-full h-full absolute'
+                />
                 <p className="text-white text-xl font-bold">Google Map Integration</p>
               </div>
             </div>

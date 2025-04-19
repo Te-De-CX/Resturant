@@ -1,39 +1,19 @@
 'use client';
 
 import Image, { StaticImageData } from 'next/image';
+import { Caesar_Dressing } from 'next/font/google';
 import HeroImg from '../../../../public/images/menu/hero/bg.png';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import Marquee from 'react-fast-marquee';
 import { Steak, Noodles, Pizzas, sushi, Taco, Hotdog } from '@/lib/services/image';
 import { FaArrowDown } from 'react-icons/fa';
+import { useEffect } from 'react';
 
-// Step 1: First, you'll need to add your custom font to your Next.js project
-// Create a fonts.ts file in your lib folder with this content:
-/*
-import { Montserrat, Playfair_Display } from 'next/font/google';
-
-export const montserrat = Montserrat({
+const ceaser = Caesar_Dressing({
   subsets: ['latin'],
-  variable: '--font-montserrat',
+  weight: '400',
 });
-
-export const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-});
-*/
-
-// If using a custom downloaded font, add it to your styles/globals.css:
-/*
-@font-face {
-  font-family: 'YourFontName';
-  src: url('/fonts/YourFontName-Regular.woff2') format('woff2'),
-       url('/fonts/YourFontName-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-*/
 
 type FoodImage = {
   id: number;
@@ -51,12 +31,61 @@ const images: FoodImage[] = [
 ];
 
 const Hero = () => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
+
   const scrollToMenu = () => {
-    document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('menu-section')?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
+  const marqueeItemVariants = {
+    hover: {
+      scale: 1.03,
+      transition: { duration: 0.3 },
+    },
   };
 
   return (
-    <section className="relative flex items-center justify-center w-full h-screen min-h-[600px] overflow-hidden">
+    <section 
+      ref={ref}
+      className="relative flex items-center justify-center w-full h-screen min-h-[600px] overflow-hidden"
+    >
+      {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
           src={HeroImg}
@@ -66,55 +95,53 @@ const Hero = () => {
           priority
           quality={100}
           placeholder="blur"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/40" />
       </div>
       
-      <div className="px-4 mx-auto max-w-7xl w-full text-white">
+      <div className="mx-auto max-w-7xl w-full px-4 text-white">
         <motion.div 
           className="flex flex-col items-center"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          animate={controls}
+          variants={containerVariants}
         >
-          {/* Apply custom font to the Tamang Menu text */}
-          <motion.h2 
-            className="text-4xl sm:text-6xl md:text-[6rem] font-bold text-yellow-400 text-center font-playfair"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            style={{ 
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-              letterSpacing: '1px'
-            }}
-          >
-            Tamang Menu
-          </motion.h2>
+          {/* Title */}
+          <motion.div variants={itemVariants} className="px-4">
+            <motion.h2 
+              className="text-6xl mt-12 sm:text-6xl md:text-[6rem] font-bold text-yellow-400 text-center"
+              style={{ 
+                textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                letterSpacing: '1px'
+              }}
+            >
+              <span className={ceaser.className}>
+                Tamang Menu
+              </span>
+            </motion.h2>
+          </motion.div>
           
+          {/* Subtitle */}
           <motion.p
-            className="text-lg sm:text-xl md:text-2xl mt-4 max-w-2xl text-center font-montserrat"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            className="px-5 text-lg sm:text-xl md:text-2xl mt-4 max-w-2xl text-center"
+            variants={itemVariants}
           >
             Authentic flavors crafted with passion and tradition
           </motion.p>
 
-          {/* Rotating "See Menu" button */}
+          {/* Scroll Button */}
           <motion.div
             className="mt-12 relative group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            variants={itemVariants}
           >
             <button
               onClick={scrollToMenu}
-              className="flex items-center gap-3 px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white rounded-full shadow-lg transition-all duration-300 group-hover:shadow-xl"
+              className="flex flex-col items-center gap-3 h-40 w-40 bg-transparent border-4 border-white justify-center text-white rounded-full shadow-lg transition-all duration-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-opacity-50"
+              aria-label="Scroll to menu section"
             >
               <span className="text-lg font-semibold uppercase tracking-wider">
-                See Menu
+                Lets see
               </span>
               <motion.div
                 animate={{ rotate: 360 }}
@@ -123,33 +150,39 @@ const Hero = () => {
                   duration: 2,
                   ease: "linear"
                 }}
-                className="text-xl"
               >
-                <FaArrowDown />
+                <FaArrowDown className="text-3xl" />
               </motion.div>
             </button>
             <div className="absolute inset-0 rounded-full bg-amber-400 blur-md opacity-0 group-hover:opacity-50 -z-10 transition-opacity duration-300" />
           </motion.div>
 
-          {/* Food image marquee */}
-          <div className="-rotate-3 border-y-8 border-white/80 w-full mt-12 md:mt-16">
-            <Marquee pauseOnHover speed={40}>
+          {/* Food Image Marquee */}
+          <motion.div 
+            className="-rotate-3 w-[110vw] border-y-8 border-white/80 mt-12 md:mt-16"
+            variants={itemVariants}
+          >
+            <Marquee speed={40}>
               {images.map((image) => (
                 <motion.div 
                   key={image.id} 
-                  className="h-44 w-72 mx-2 overflow-hidden rounded-lg shadow-md"
-                  whileHover={{ scale: 1.03 }}
+                  className="h-44 w-72 border-x-2 border-white overflow-hidden rounded-lg shadow-md mx-1"
+                  variants={marqueeItemVariants}
+                  whileHover="hover"
                 >
                   <Image
                     src={image.name}
                     alt={image.alt}
-                    className="object-cover w-full h-full opacity-80 hover:opacity-100 transition-opacity duration-300"
-                    sizes="(max-width: 768px) 100vw, 288px"
+                    width={288}
+                    height={176}
+                    className="object-cover w-full h-full opacity-90 hover:opacity-100 transition-opacity duration-300"
+                    placeholder="blur"
+                    loading="lazy"
                   />
                 </motion.div>
               ))}
             </Marquee>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,34 +1,43 @@
-import Image from 'next/image';
-import HeroImg from '../../../../public/images/about/hero/bg.png';
+'use client';
+
+import { motion } from 'framer-motion';
 import { chefsData } from '@/lib/data/about/Chefs';
 import ChefsCarousel from './carousel/ChefsCarosel';
 
 const Chefs = () => {
     return (
-        <section className="relative">
-            {/* Hero Background */}
-            <div className="absolute inset-0 -z-10 h-[50vh]">
-                <Image
-                    src={HeroImg}
-                    alt="Chefs background"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-                <div className="absolute inset-0 bg-black/40" />
-            </div>
-            
+        <section className="relative overflow-hidden py-20">
             {/* Content */}
-            <div className="container mx-auto px-4 py-24 relative">
+            <div className="container mx-auto px-4 relative">
                 {/* Section Heading */}
-                <h5 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-                    Our <span className="text-amber-400">Top Notch</span> Chefs
-                </h5>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center mb-16"
+                >
+                    <h5 className="text-4xl md:text-5xl font-bold text-black mb-4">
+                        Our <span className="text-amber-400">Top Notch</span> Chefs
+                    </h5>
+                    <motion.div 
+                        className="w-24 h-1 bg-amber-400 mx-auto"
+                        initial={{ scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    />
+                </motion.div>
                 
                 {/* Chef Carousel */}
-                <div className="mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
                     <ChefsCarousel chefs={chefsData} />
-                </div>
+                </motion.div>
             </div>
         </section>
     );

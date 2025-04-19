@@ -4,15 +4,17 @@ import Link from "next/link"
 import { useState } from "react";
 import Image from "next/image";
 import  Logo  from "../../../../public/icons/svgs/etc/logo.svg"
+import { useCurrentUser } from "@/lib/api/auth";
 
 const Nav: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {data : user } = useCurrentUser()
   
   const pages = [
     { id: 1, name: "home", link: "/" },
     { id: 2, name: "about", link: "/about"  },
     { id: 3, name: "menu", link: "/menu"  },
-    { id: 4, name: "resturants",  link: "/resturants" },
+    { id: 4, name: "resturants",  link: "/restaurants" },
     // { id: 5, name: "payment",  link: "/payment" },
   ];
 
@@ -78,7 +80,7 @@ const Nav: React.FC = () => {
                 <li key={page.id}>
                   <Link
                     href={page.link} 
-                    className="block py-2 text-black/90 hover:text-black font-bold uppercase text-xl tracking-wider transition-colors"
+                    className="block py-2 text-black/90 hover:text-black font-bold uppercase text-2xl text-center my-3 tracking-wider transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {page.name}
@@ -86,14 +88,24 @@ const Nav: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-white/20">
-              <Link href="/login"  className="w-full py-2 bg-white/20 hover:bg-white/30 text-black text-sm font-bold rounded-full border border-white/30 transition-all">
+            {
+              user?.username ? (
+                <>
+                <Link href="/dashboard"  className="w-full py-2 bg-yellow-400 hover:bg-yellow-300/30 text-black text-lg font-bold rounded-full border flex items-center justify-center border-white/30 transition-all my-7">
+                Dashboard
+              </Link>
+                </>
+              ):(
+                <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-white/20">
+              <Link href="/login"  className="w-full py-2 bg-yellow-400 hover:bg-yellow-300/30 text-black text-lg font-bold rounded-full border flex items-center justify-center border-white/30 transition-all">
                 Get Started
               </Link>
-              <Link href= "/register" className="w-full py-2 text-black/90 hover:text-black font-medium text-sm transition-colors">
+              <Link href= "/register" className=" w-full py-2 text-black/90 hover:text-black text-center  text-2xl  font-bold transition-colors">
                 Login
               </Link>
             </div>
+              )
+            }
           </div>
         )}
       </div>

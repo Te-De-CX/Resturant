@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import HeroImg from '../../../../public/images/about/hero/bg.png';
+import HeroImg from '../../../../public/images/resturant/img.jpg';
 
 const Hero = () => {
   return (
@@ -7,11 +7,11 @@ const Hero = () => {
       {/* Content Section */}
       <div className="container mx-auto px-6 py-16 lg:py-0 lg:px-12 lg:w-1/2 z-10">
         <div className="max-w-lg mx-auto lg:mx-0">
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 md:mb-6 mt-7 md:mt-1">
             Find the nearest restaurants around you
           </h3>
           
-          <div className="relative mb-6">
+          <div className="relative my-6">
             <input 
               type="text" 
               placeholder="Search here..." 
@@ -43,11 +43,11 @@ const Hero = () => {
       </div>
       
       {/* Image Section */}
-      <div className="">
+      <div className="px-5">
         <Image
           src={HeroImg}
           alt="Noodles background"
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full rounded-2xl"
           quality={100}
           sizes="(max-width: 1024px) 100vw, 50vw"
         />

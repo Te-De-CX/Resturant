@@ -23,6 +23,10 @@ const Orders = () => {
           <MealPlanner />
           <div className="lg:bg-[#868686] lg:bg-opacity-20 lg:text-white bg-white text-gray-800 p-4 lg:p-6 rounded-xl lg:border-2 lg:border-white lg:backdrop-blur-2xl w-full flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] border-black border-2">
             <div className="[&::-webkit-scrollbar]:hidden">
+              
+            <h2 className='text-2xl font-bold text-center mb-6'>
+                    Your Order
+                </h2>
               <HomeCart />
             </div>
           </div>
