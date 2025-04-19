@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  trailingSlash: true,
+  // experimental: {
+  //   missingSuspenseWithCSRBailout: false,
+  // },
 
 // next.config.js
-module.exports = {
+// module.exports = {
   skipMiddlewareUrlNormalize: true,
   skipTrailingSlashRedirect: true,
   images: {
