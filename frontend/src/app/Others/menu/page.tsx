@@ -2,7 +2,7 @@
 import { useCartStore } from '@/lib/store/cartStore';
 
 export default function CartView() {
-  const { items, total, removeFromCart, updateQuantity, clearCart } = useCartStore();
+  const { items, total, removeFromCart, clearCart } = useCartStore();
 
   return (
     <div className="max-w-md mx-auto p-4">

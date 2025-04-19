@@ -7,7 +7,7 @@ import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import Image from 'next/image';
 import Bowl from '../../../../../../public/icons/svgs/etc/bowl.svg';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FiClock, FiCheckCircle, FiXCircle, FiLoader } from 'react-icons/fi';
 
 const History = () => {
