@@ -1,19 +1,20 @@
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { StaticImageData } from "next/dist/shared/lib/get-img-props";
 
 // types.ts
 export interface Product {
   id: number;
   name: string;
   price: number;
-  image?: string;
+  image?: StaticImageData;
   description?: string;
+  old_price: number
 }
 
 export interface CartItem {
   id: number;
   name: string;
   price: number;
-  image: StaticImport | string;
+  image: StaticImageData | string;
   quantity: number;
 }
 

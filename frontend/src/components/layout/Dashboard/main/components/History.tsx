@@ -5,6 +5,8 @@ import { useProducts } from '@/lib/api/products';
 import { useCurrentUser } from '@/lib/api/auth';
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
+import Image from 'next/image';
+import Bowl from '../../../../../../public/icons/svgs/etc/bowl.svg'
 
 const History = () => {
   const { data: user } = useCurrentUser();
@@ -69,18 +71,28 @@ const History = () => {
     <section className="w-full bg-[#191919] text-white p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        {!recentOrders || recentOrders.length === 0 ? (
+          <h1 className="text-xl sm:text-2xl font-bold">No Recent Orders</h1>
+        ) : (
           <h1 className="text-xl sm:text-2xl font-bold">Recent Orders</h1>
+        )}
           <Link 
             href="/history" 
             className="text-amber-400 hover:text-amber-300 transition-colors text-sm sm:text-base"
           >
-            View Full History →
+            View All
           </Link>
         </div>
         
         {!recentOrders || recentOrders.length === 0 ? (
           <div className="text-center py-10">
-            <p className="text-gray-400">You haven&apos;t placed any orders yet.</p>
+            <Image
+              src={Bowl}
+              alt='bowl' 
+              className='w-32'
+            />
+            <h4>No Recent Transaction</h4>
+            <p className="text-gray-400">You haven&apos;t made any transactions. This is where your most recent transaction will show.</p>
           </div>
         ) : (
           <div className="space-y-4">

@@ -4,7 +4,7 @@ export interface MenuCardProps {
     id?: number,
     name:string,
     description?: string,
-    img?: StaticImageData,
+    img: StaticImageData | string,
     newPrice: number,
     formerPrice: number,
 }

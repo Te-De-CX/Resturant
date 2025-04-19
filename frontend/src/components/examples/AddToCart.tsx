@@ -1,11 +1,12 @@
 'use client';
 import { useCartStore } from '@/lib/store/cartStore';
 import { FiShoppingCart } from 'react-icons/fi';
+import { StaticImageData } from 'next/image';
 
 export default function AddToCartButton({
   product,
 }: {
-  product: { id: number; name: string; price: number; image?: string };
+  product: { id: number; name: string; price: number; image: StaticImageData | string };
 }) {
   const addToCart = useCartStore((state) => state.addToCart);
 
