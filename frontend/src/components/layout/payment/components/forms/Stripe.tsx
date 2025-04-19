@@ -48,7 +48,7 @@ const StripeForm = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderId, setOrderId] = useState<number | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
     firstName: '',

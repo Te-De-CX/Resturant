@@ -29,7 +29,7 @@ const Menu = () => {
                         key={index}
                         name={value.name} 
                         img={value.img} 
-                        text={value.text} 
+                        description={value.text} 
                         newPrice={value.price} 
                         formerPrice={value.formerPrice} 
                     />

@@ -58,7 +58,7 @@ const History = () => {
     completed: <FiCheckCircle className="mr-1" />,
     cancelled: <FiXCircle className="mr-1" />
   };
-
+  
   const statusColors = {
     pending: 'bg-amber-900 text-amber-300',
     processing: 'bg-blue-900 text-blue-300',
@@ -190,8 +190,8 @@ const History = () => {
                       {formatDate(order.order_date || order.created_at)}
                     </p>
                   </div>
-                  <div className={`flex items-center px-3 py-1 rounded-full text-xs sm:text-sm ${statusColors[order.status.toLowerCase()]}`}>
-                    {statusIcons[order.status.toLowerCase()]}
+                  <div className={`flex items-center px-3 py-1 rounded-full text-xs sm:text-sm ${statusColors[order.status]}`}>
+                    {statusIcons[order.status]}
                     {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                   </div>
                 </div>

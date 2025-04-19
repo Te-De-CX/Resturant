@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export type TokenResponse = {
   access: string;
   refresh: string;
@@ -35,6 +37,8 @@ export type LoginCredentials = {
 
 export type CurrentUser = {
     id: number;
+    address: string;
+    image: StaticImageData;
     username: string;
     email: string;
     first_name?: string;
