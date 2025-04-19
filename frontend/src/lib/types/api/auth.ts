@@ -38,7 +38,7 @@ export type LoginCredentials = {
 export type CurrentUser = {
     id: number;
     address: string;
-    image: StaticImageData;
+    image?: StaticImageData;
     username: string;
     email: string;
     first_name?: string;
