@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
 
 // next.config.js
 module.exports = {
+  skipMiddlewareUrlNormalize: true,
+  skipTrailingSlashRedirect: true,
   images: {
     remotePatterns: [
       {
