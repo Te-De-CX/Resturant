@@ -22,20 +22,26 @@ const Support = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Left randomized image (hidden on mobile) */}
           <div className="hidden md:block w-1/4">
-            <div className="bg-white/20 rounded-lg h-40 w-full backdrop-blur-sm" />
+          <div className='aspect-square w-24 rounded-full overflow-hidden absolute'>
+            <Image 
+              src={SupportImage}
+              alt='image'
+              className='object-cover rounded-full'
+            />
+            </div>
           </div>
 
           {/* Main content */}
-          <div className="flex-1 max-w-2xl">
+          <div className="flex-1">
             <h3 className="text-3xl sm:text-4xl font-bold mb-6">
               For More Support
             </h3>
             
-            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+            <div className="flex flex-col sm:flex-row gap-2 justify-center w-full">
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="flex-1 px-4 py-3 rounded-lg bg-white/20 backdrop-blur-sm placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="flex-1 rounded-full px-4 py-3 border-2 border-white w-full backdrop-blur-sm placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
               <button className="px-6 py-3 bg-yellow-500 text-black font-medium rounded-lg hover:bg-yellow-600 transition-colors">
                 Subscribe
@@ -45,7 +51,13 @@ const Support = () => {
 
           {/* Right randomized image (hidden on mobile) */}
           <div className="hidden md:block w-1/4">
-            <div className="bg-white/20 rounded-lg h-40 w-full backdrop-blur-sm" />
+            <div className='aspect-square w-24 rounded-full overflow-hidden absolute'>
+            <Image 
+            src={SupportImage}
+            alt='image'
+            className='object-cover rounded-full'
+            />
+            </div>
           </div>
         </div>
       </div>

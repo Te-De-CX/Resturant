@@ -22,9 +22,9 @@ const AdsComponent = () => {
   }, [ads]);
 
   if (isLoading) return (
-    <div className="flex justify-center items-center h-32">
-      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-    </div>
+    <div className=' px-5 mt-3'> 
+    <div className="relative w-full h-32 rounded-xl bg-gray-300">
+  </div></div>
   );
 
   if (error) return (

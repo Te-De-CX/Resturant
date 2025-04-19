@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { Suspense } from 'react';
+import DashboardLoading from './loading';
 import DashboardNav from '@/components/UI/Nav/DashBoardNav';
 import ProtectedRoute from '@/components/layout/Routes/ProtectedRoute';
 
@@ -22,10 +24,12 @@ export default function DashboardLayout({
 
   return (
     <ProtectedRoute>
+    <Suspense fallback={<DashboardLoading />}>
       <DashboardNav />
       <div className={`${!isMobile ? 'ml-64' : 'pb-16'} min-h-screen transition-all`}>
         {children}
       </div>
+      </Suspense>
     </ProtectedRoute>
   );
 }

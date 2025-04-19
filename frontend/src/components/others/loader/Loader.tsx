@@ -1,4 +1,6 @@
-import React from 'react';
+'use client'
+
+import React, {useRef} from 'react';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import loadingAnimation from '../../../../public/lottiefiles/loader.json'; 
 import { LoaderProps, LoaderSize } from '../../../lib/types/lottie/type';
@@ -11,15 +13,14 @@ const Loader: React.FC<LoaderProps> = ({
   className = '',
   animationSpeed = 1,
 }) => {
-  const lottieRef = React.useRef<LottieRefCurrentProps>(null);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
   
-  // Size classes mapping
   const sizeClasses: Record<LoaderSize, string> = {
     xs: 'w-12 h-12',
     sm: 'w-16 h-16',
-    md: 'w-24 h-24',
-    lg: 'w-32 h-32',
-    xl: 'w-48 h-48',
+    md: 'w-72 h-72',
+    lg: 'w-72 h-72',
+    xl: 'w-72 h-72',
   };
 
   // Container classes based on props

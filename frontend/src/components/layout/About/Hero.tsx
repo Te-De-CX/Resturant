@@ -60,7 +60,7 @@ const Hero = () => {
             <button className="px-8 py-3 bg-yellow-500 hover:bg-yellow-600 rounded-lg font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
               Check Blog Post
             </button>
-            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white hover:text-black rounded-lg font-medium transition-all duration-300 transform hover:-translate-y-1">
+            <button className="px-8 py-3 bg-transparent border-2 border-white hover:bg-white hover:text-black rounded-lg font-medium transition-all duration-300 transform hover:-translate-y-1 rounded-tl-[2.5rem] rounded-br-[2.5rem]">
               Book a Reservation
             </button>
           </motion.div>

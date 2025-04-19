@@ -8,41 +8,41 @@ const ReviewsCard: React.FC<ReviewsCardProps> = ({ name, img, text, position, nu
     return Array(5).fill(0).map((_, i) => (
       <IoStar 
         key={i} 
-        size={16} 
-        className={i < numberOfStars ? "fill-yellow-400 text-yellow-400" : "text-gray-400"} 
+        className={`w-4 h-4 ${i < numberOfStars ? "fill-yellow-400 text-yellow-400" : "text-gray-400"}`}
       />
     ));
   };
 
   return (
-    <div className="flex flex-col gap-4 p-6 rounded-xl bg-[#191919] text-white hover:bg-[#222222] transition-colors duration-300">
-      <div className="flex items-start gap-4">
-        <div className="relative flex-shrink-0">
+    <div className="flex flex-col gap-4 p-5 sm:p-6 rounded-xl bg-[#191919] text-white hover:bg-[#222222] transition-colors duration-300 h-full">
+      <div className="flex items-start gap-3 sm:gap-4">
+        <div className="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20">
           <Image 
             src={img}
-            alt={name}
-            width={77}
-            height={77}
-            className="rounded-full object-cover"
+            alt={`${name}'s profile picture`}
+            width={80}
+            height={80}
+            className="rounded-full object-cover w-full h-full"
+            loading="lazy"
           />
         </div>
-        <div className="flex flex-col gap-[0.3rem]">
-          <h3 className="text-xl font-semibold mb-1">{name}</h3>
-          <p className="text-sm text-gray-300">{position}</p>
-          <div className="flex gap-1">
+        <div className="flex flex-col gap-1">
+          <h3 className="text-lg sm:text-xl font-semibold">{name}</h3>
+          <p className="text-xs sm:text-sm text-gray-300">{position}</p>
+          <div className="flex gap-1 mt-1">
             {renderStars()}
-            {/* <span className="text-xs text-gray-400 ml-1">({numberOfStars}.0)</span> */}
           </div>
         </div>
       </div>
       
-      <div className="relative">
-      <div className="flex absolute w-full items-center -top-2 left-0" >
-        <BsQuote className="text-[2.5rem]" />
-        <hr className=" text-white w-8/12" />
-      </div>
-        {/* <span className="absolute -top-4 left-0 text-3xl text-gray-500">&quot;</span> */}
-        <p className="text-gray-200 text-lg pt-4 pl-4 mt-6">{text}</p>
+      <div className="relative flex-grow">
+        <div className="flex absolute w-full items-center -top-2 left-0">
+          <BsQuote className="text-3xl sm:text-4xl text-gray-600" />
+          <hr className="border-gray-700 w-8/12" />
+        </div>
+        <p className="text-gray-200 text-base sm:text-lg pt-4 pl-4 mt-6">
+          {text}
+        </p>
       </div>
     </div>
   );

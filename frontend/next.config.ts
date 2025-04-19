@@ -14,12 +14,11 @@ module.exports = {
         port: '8000',
         pathname: '/media/**',
       },
-      // Add your production domain when ready
-      // {
-      //   protocol: 'https',
-      //   hostname: 'your-production-domain.com',
-      //   pathname: '/products/**',
-      // }
+      {
+        protocol: 'https',
+        hostname: 'tedecx.pythonanywhere.com',
+        pathname: '/media/**',
+      }
     ],
   },
 }

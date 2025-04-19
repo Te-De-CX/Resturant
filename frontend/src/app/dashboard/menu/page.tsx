@@ -14,7 +14,7 @@ const ProductsPage = () => {
   if (error) return <div>Error loading products: {error.message}</div>;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
       <h2 className="text-2xl font-bold col-span-full">Product List</h2>
       
       {products.length > 0 ? (

@@ -3,6 +3,7 @@
 import { useCurrentUser } from '@/lib/api/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import DashboardLoading from '@/app/dashboard/loading';
 
 export default function ProtectedRoute({
   children,
@@ -21,7 +22,7 @@ export default function ProtectedRoute({
   if (isLoading || !user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl font-semibold">Loading...</div>
+        <DashboardLoading />
       </div>
     );
   }

@@ -37,6 +37,8 @@ export type CurrentUser = {
     id: number;
     username: string;
     email: string;
+    first_name?: string;
+    last_name?: string;
     // Add other user fields as needed
   };
   

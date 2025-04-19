@@ -1,32 +1,52 @@
+'use client';
+
 import { useUserOrders } from '@/lib/hooks/useOrders';
-import { orderApi } from '@/lib/api/orders';
+import { useProducts } from '@/lib/api/products';
 import { useCurrentUser } from '@/lib/api/auth';
 import { format, parseISO } from 'date-fns';
+import Link from 'next/link';
 
 const History = () => {
   const { data: user } = useCurrentUser();
   const { 
     data: orders, 
-    isLoading, 
-    error 
+    isLoading: ordersLoading, 
+    error: ordersError 
   } = useUserOrders(user?.id);
   
-  const allOrders = orderApi.getAllOrders();
-
-  // const { 
-  //   data: ordered, 
-  // } = useOrder(1);
+  const { 
+    data: products, 
+    isLoading: productsLoading, 
+    error: productsError 
+  } = useProducts();
 
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Date unavailable';
     
     try {
-      return format(parseISO(dateString), 'MMMM d, yyyy - h:mm a');
+      const dateToFormat = dateString.includes('T') ? dateString : 
+                          dateString.endsWith('Z') ? dateString : 
+                          `${dateString}Z`;
+      return format(parseISO(dateToFormat), 'MMMM d, yyyy - h:mm a');
     } catch (error) {
-      console.warn(`Invalid date format: ${error}`, dateString);
+      console.warn(`Invalid date format: ${dateString}`, error);
       return 'Date unavailable';
     }
   };
+
+  const productMap = products?.reduce((acc, product) => {
+    acc[product.id] = product;
+    return acc;
+  }, {} as Record<number, { name: string }>);
+
+  const isLoading = ordersLoading || productsLoading;
+  const error = ordersError || productsError;
+
+  // Get only the last 3 orders, sorted by date (newest first)
+  const recentOrders = orders?.sort((a, b) => 
+    new Date(b.order_date || b.created_at).getTime() - 
+    new Date(a.order_date || a.created_at).getTime()
+  ).slice(0, 3);
 
   if (isLoading) {
     return (
@@ -40,37 +60,43 @@ const History = () => {
     return (
       <div className="p-4 text-red-500 text-center">
         {error.message || 'Failed to load your order history'}
-        {error.details && <p className="text-sm">{error.details}</p>}
+        <p className="text-sm">Sorry, an error occurred</p>
       </div>
     );
   }
 
-  console.log(allOrders)
-
   return (
-    <section className="w-full bg-[#191919] min-h-screen text-white p-6">
+    <section className="w-full bg-[#191919] text-white p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Your Order History</h1>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <h1 className="text-xl sm:text-2xl font-bold">Recent Orders</h1>
+          <Link 
+            href="/history" 
+            className="text-amber-400 hover:text-amber-300 transition-colors text-sm sm:text-base"
+          >
+            View Full History →
+          </Link>
+        </div>
         
-        {!orders || orders.length === 0 ? (
+        {!recentOrders || recentOrders.length === 0 ? (
           <div className="text-center py-10">
             <p className="text-gray-400">You haven&apos;t placed any orders yet.</p>
           </div>
         ) : (
           <div className="space-y-4">
-            {orders.map((order) => (
+            {recentOrders.map((order) => (
               <div key={order.id} className="bg-[#2a2a2a] rounded-lg p-4 shadow-md">
-                <div className="flex justify-between items-start mb-2">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-2">
                   <div>
-                    <h2 className="font-semibold text-lg">Order #{order.id}</h2>
-                    <p className="text-gray-400 text-sm">
-                      {formatDate(order.created_at)}
+                    <h2 className="font-semibold text-base sm:text-lg">Food Ordered</h2>
+                    <p className="text-gray-400 text-xs sm:text-sm">
+                      {formatDate(order.order_date || order.created_at)}
                     </p>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-sm ${
+                  <span className={`px-3 py-1 rounded-full text-xs sm:text-sm ${
                     order.status.toLowerCase() === 'completed' 
                       ? 'bg-green-900 text-green-300' 
-                      : order.status === 'cancelled' 
+                      : order.status.toLowerCase() === 'cancelled' 
                         ? 'bg-red-900 text-red-300' 
                         : 'bg-amber-900 text-amber-300'
                   }`}>
@@ -79,23 +105,27 @@ const History = () => {
                 </div>
 
                 <div className="border-t border-gray-700 my-3 pt-3">
-                  <h3 className="font-medium mb-2">Items:</h3>
                   <ul className="space-y-2">
-                    {order.items.map((item) => (
-                      <li key={item.product.id} className="flex justify-between">
-                        <div className="flex items-center">
-                          <span className="text-amber-400 mr-2">×{item.quantity}</span>
-                          <span>{item.product.name}</span>
-                        </div>
-                        <span>${(item.price * item.quantity).toFixed(2)}</span>
-                      </li>
-                    ))}
+                    {order.items.map((item) => {
+                      const product = productMap?.[item.product];
+                      return (
+                        <li key={`${order.id}-${item.product}`} className="flex justify-between items-center text-sm sm:text-base">
+                          <div className="flex items-center">
+                            <span className="truncate max-w-[120px] sm:max-w-[200px]">
+                              {product?.name || `Product #${item.product}`}
+                            </span>
+                            <span className="text-amber-400 ml-2">×{item.quantity}</span>
+                          </div>
+                          <span>${(item.price * item.quantity).toFixed(2)}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
-                <div className="flex justify-between items-center border-t border-gray-700 pt-3">
+                <div className="flex justify-between items-center border-t border-gray-700 pt-3 text-sm sm:text-base">
                   <span className="font-medium">Total:</span>
-                  <span className="text-xl font-bold">${order.total.toFixed(2)}</span>
+                  <span className="text-lg sm:text-xl font-bold">${order.total.toFixed(2)}</span>
                 </div>
               </div>
             ))}

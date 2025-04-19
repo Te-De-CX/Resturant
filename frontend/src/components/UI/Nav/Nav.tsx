@@ -3,7 +3,7 @@ import Link from "next/link"
 
 import { useState } from "react";
 import Image from "next/image";
-import { Logo } from "@/lib/services/image";
+import  Logo  from "../../../../public/icons/svgs/etc/logo.svg"
 
 const Nav: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ const Nav: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-5 py-3">
         <div className="flex justify-between items-center">
           {/* Logo Section */}
-          <div className="flex items-center gap-5">
+          <Link href="/" className="flex items-center gap-5">
             <Image 
               width={30} 
               height={30} 
@@ -29,11 +29,11 @@ const Nav: React.FC = () => {
               alt="Logo" 
               className="filter drop-shadow-md flex justify-center items-center"
             />
-            <h5 className="hidden sm:flex flex-col items-center justify-center text-md capitalize font-bold text-black">
+            <h5 className=" flex flex-col items-center justify-center text-md capitalize font-bold text-black">
               <span className="leading-4">tamang</span>
               <span className="">foodService</span>
             </h5>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <ul className="hidden md:flex gap-8">
@@ -76,13 +76,13 @@ const Nav: React.FC = () => {
             <ul className="flex flex-col gap-4">
               {pages.map((page) => (
                 <li key={page.id}>
-                  <a 
-                    href="#" 
-                    className="block py-2 text-black/90 hover:text-black font-medium uppercase text-sm tracking-wider transition-colors"
+                  <Link
+                    href={page.link} 
+                    className="block py-2 text-black/90 hover:text-black font-bold uppercase text-xl tracking-wider transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {page.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

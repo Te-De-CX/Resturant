@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Steak } from "@/lib/services/image";
+import { FaPlay } from "react-icons/fa";
 
 const Chef = () => {
   return (
@@ -36,15 +37,29 @@ const Chef = () => {
         </div>
         
         <div className="order-1 lg:order-2 lg:w-1/2">
-          <div className="relative w-full h-64 md:h-80 lg:h-[25rem]">
-            <Image
-              src={Steak}
-              alt="Chef image"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-2xl"
-              priority
-            />
+  <div className="relative w-full h-64 md:h-80 lg:h-[25rem] group">
+    {/* Dark overlay */}
+    <div className="absolute inset-0 bg-black/30 rounded-2xl z-10 transition-opacity duration-300 group-hover:bg-black/40"></div>
+    
+    <Image
+      src={Steak}
+      alt="Chef image"
+      layout="fill"
+      objectFit="cover"
+      className="rounded-2xl"
+      priority
+    />
+    
+    {/* Play button with pulse animation */}
+    <div className="absolute inset-0 flex items-center justify-center z-20">
+      <button className="p-4 bg-amber-600 rounded-full text-white shadow-lg hover:bg-amber-700 transition-all duration-300 transform hover:scale-105 focus:outline-none">
+                <div className="relative">
+                  <FaPlay className="text-xl" />
+                  {/* Pulse animation */}
+                  <span className="absolute inset-0 rounded-full bg-amber-600 opacity-70 animate-ping"></span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ const Chefs = () => {
                 </h5>
                 
                 {/* Chef Carousel */}
-                <div className="max-w-7xl mx-auto px-4">
+                <div className="mx-auto px-4">
                     <ChefsCarousel chefs={chefsData} />
                 </div>
             </div>

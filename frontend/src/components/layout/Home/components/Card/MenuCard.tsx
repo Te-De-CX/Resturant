@@ -28,8 +28,8 @@ const MenuCard: React.FC<MenuCardProps> = ({ name, img, description, newPrice, f
                 <span className="text-sm text-red-500 line-through">${formerPrice}</span>
               )}
             </div>
-            <button className="p-2 rounded-full bg-[#FBBC05] hover:bg-yellow-400 transition-colors">
-              <GrCart size={18} className="text-gray-900" />
+            <button className="p-2 rounded-full text-white border-2 border-white bg-transparent transition-colors">
+              <GrCart size={18}  />
             </button>
           </div>
         </div>

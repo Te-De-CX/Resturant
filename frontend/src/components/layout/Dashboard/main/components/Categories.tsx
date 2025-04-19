@@ -3,16 +3,31 @@
 import Image from "next/image";
 import { useCategories } from "@/lib/api/categories";
 import Marquee from "react-fast-marquee";
+import Loader from "./CategoryLoader";
 
 const Categories = () => {
     const { data = [], isLoading, error } = useCategories();
-    
-    if (isLoading) return <div>Loading products...</div>;
+
+    if (isLoading) return <div>
+        <h2 className="text-2xl font-bold mb-4 px-8 mt-5">Categories</h2>
+            <Marquee>
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+                <Loader />
+            </Marquee>
+        </div>;
     if (error) return <div>Error loading products: {error.message}</div>;
 
     return (
         <>
-            <h2 className="text-2xl font-bold mb-4 px-8">Categories</h2>
+            <h2 className="text-2xl font-bold mb-4 px-8 mt-5">Categories</h2>
             <Marquee>
                 {data.map((category) => (
                     <div key={category.id} className="bg-[#191919] text-white shadow-md rounded-3xl mx-2 p-4 mb-4 relative h-40 flex flex-col items-center justify-center w-32 gap-2">

@@ -4,13 +4,12 @@ import { Product } from "@/lib/types/api/products";
 import { useState } from "react";
 import MenuCard from "./components/Card/MenuCard";
 
-
-
-const categories = ["all", "bread", "chiffon & rolls", "Fried Chicken", "pastry and danish", "cakes", "cookies"] as const;
+const categories = ["all", "Desserts & Sweet Treats", "Wraps & Shawarma", "Fried Chicken", "Steak & Grill", "Mexican Street Food", "Pizza"] as const;
 type CategoryType = typeof categories[number];
 
 const MenuPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("all");
+  const [visibleProducts, setVisibleProducts] = useState(8); // Initial number of products to show
   const { data: allProducts = [], isLoading, error } = useProducts();
 
   // Safe filtering function with proper typing
@@ -26,100 +25,124 @@ const MenuPage = () => {
 
   const handleCategoryClick = (category: CategoryType) => {
     setSelectedCategory(category);
+    setVisibleProducts(8); // Reset to 8 when changing categories
   };
 
-  if (error) return <div>Error loading products: {error.message}</div>;
+  const loadMoreProducts = () => {
+    setVisibleProducts(prev => prev + 8); // Load 8 more products
+  };
+
+  if (error) return <div className="text-center py-10 text-red-500">Error loading products: {error.message}</div>;
 
   return (
-    <div className="gap-4 p-4 flex flex-col">
-
-      <div className="flex justify-center mb-12">
-        <div className="relative w-full max-w-6xl overflow-x-auto pb-3">
-            {/* Custom scrollbar styling */}
-            <style jsx>{`
+    <div className="gap-4 p-4 md:p-6 flex flex-col">
+      {/* Category Tabs */}
+      <div className="flex justify-center mb-8 md:mb-12">
+        <div className="relative w-full max-w-7xl overflow-x-auto pb-2">
+          {/* Custom scrollbar styling */}
+          <style jsx>{`
             .categories-scroll::-webkit-scrollbar {
-                height: 6px;
+              height: 4px;
             }
             .categories-scroll::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 10px;
+              background: #f1f1f1;
+              border-radius: 10px;
             }
             .categories-scroll::-webkit-scrollbar-thumb {
-                background: #888;
-                border-radius: 10px;
+              background: #888;
+              border-radius: 10px;
             }
             .categories-scroll::-webkit-scrollbar-thumb:hover {
-                background: #555;
+              background: #191919;
             }
-            `}</style>
-            
-            <ul className="categories-scroll flex nowrap gap-2 px-4 py-3 w-max min-w-full">
+          `}</style>
+          
+          <ul className="categories-scroll flex nowrap gap-1 sm:gap-2 px-2 sm:px-4 py-2 w-max min-w-full">
             {categories.map((category, index) => (
-                <li key={index} className="flex-shrink-0">
+              <li key={index} className="flex-shrink-0">
                 <button
-                    onClick={() => handleCategoryClick(category)}
-                    className={`
-                    relative px-6 py-3 capitalize font-medium text-gray-700
-                    transition-all duration-300 hover:text-black
-                    group
+                  onClick={() => handleCategoryClick(category)}
+                  className={`
+                    relative px-4 py-2 sm:px-6 sm:py-3 capitalize font-medium text-gray-700
+                    transition-all duration-300 hover:text-black whitespace-nowrap
+                    group rounded-lg
                     ${
-                        selectedCategory === category
-                        ? 'text-black font-semibold'
-                        : ''
+                      selectedCategory === category
+                      ? 'text-black font-semibold bg-amber-50'
+                      : ''
                     }
-                    `}
+                  `}
                 >
-                    {category}
-                    
-                    {/* Active indicator - thick rounded background shadow */}
-                    <span className={`
-                    absolute inset-x-1 bottom-0 h-2 rounded-t-full
-                    bg-gray-900 transition-all duration-300
+                  {category}
+                  
+                  {/* Active indicator */}
+                  <span className={`
+                    absolute inset-x-1 -bottom-1 h-1 rounded-full
+                    bg-amber-600 transition-all duration-300
                     ${selectedCategory === category ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}
-                    `}></span>
-                    
-                    {/* Floating effect for active item */}
-                    {selectedCategory === category && (
-                    <span className="absolute inset-0 rounded-lg bg-white shadow-lg z-[-1]"></span>
-                    )}
+                  `}></span>
                 </button>
-                </li>
+              </li>
             ))}
-            </ul>
+          </ul>
         </div>
-    </div>
+      </div>
 
-      {isLoading ? (
-        // Loading state with empty cards
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="border rounded-lg p-4 animate-pulse">
-              <div className="bg-gray-200 h-48 w-full rounded-md"></div>
-              <div className="mt-4 space-y-2">
-                <div className="bg-gray-200 h-4 w-3/4 rounded"></div>
-                <div className="bg-gray-200 h-4 w-1/2 rounded"></div>
+      {/* Content Area */}
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8">
+        {isLoading ? (
+          // Loading state with skeleton cards
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="border border-gray-200 rounded-lg p-4 animate-pulse">
+                <div className="bg-gray-200 h-48 w-full rounded-md"></div>
+                <div className="mt-4 space-y-3">
+                  <div className="bg-gray-200 h-5 w-3/4 rounded"></div>
+                  <div className="bg-gray-200 h-4 w-1/2 rounded"></div>
+                  <div className="bg-gray-200 h-6 w-1/3 rounded mt-2"></div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredProducts.map((product: Product) => (
-            <div key={product.id}>
-              <MenuCard 
-                  name ={product.name} 
+            ))}
+          </div>
+        ) : filteredProducts.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {filteredProducts.slice(0, visibleProducts).map((product: Product) => (
+                <MenuCard 
+                  key={product.id}
+                  name={product.name} 
                   description={product.text}
                   img={product.image}
                   newPrice={product.price}
                   formerPrice={product.old_price}
-
-              />
+                />
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className="col-span-full text-center">No products found in this category</p>
-      )}
+            
+            {/* Show "Load More" button if there are more products */}
+            {filteredProducts.length > visibleProducts && (
+              <div className="flex justify-center mt-8 md:mt-12">
+                <button
+                  onClick={loadMoreProducts}
+                  className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg"
+                >
+                  Load More
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="col-span-full text-center py-12">
+            <p className="text-lg text-gray-600">No products found in this category</p>
+            <button
+              onClick={() => setSelectedCategory("all")}
+              className="mt-4 px-6 py-2 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 transition-colors"
+            >
+              View All Products
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
