@@ -97,10 +97,10 @@ const Nav: React.FC = () => {
                 </>
               ):(
                 <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-white/20">
-              <Link href="/login"  className="w-full py-2 bg-yellow-400 hover:bg-yellow-300/30 text-black text-lg font-bold rounded-full border flex items-center justify-center border-white/30 transition-all">
+              <Link href="/register"  className="w-full py-2 bg-yellow-400 hover:bg-yellow-300/30 text-black text-lg font-bold rounded-full border flex items-center justify-center border-white/30 transition-all">
                 Get Started
               </Link>
-              <Link href= "/register" className=" w-full py-2 text-black/90 hover:text-black text-center  text-2xl  font-bold transition-colors">
+              <Link href= "/login" className=" w-full py-2 text-black/90 hover:text-black text-center  text-2xl  font-bold transition-colors">
                 Login
               </Link>
             </div>

@@ -3,14 +3,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { LoadingProvider } from '@/lib/contexts/LoadingProvider';
+import Loader from '@/components/others/loader/Loader'; // Adjust the import path to your loader file
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   return (
-    <LoadingProvider>
     <QueryClientProvider client={queryClient}>
+      {isLoading && <Loader />} {/* Show loader when loading */}
       {children}
       <Toaster 
         position="top-center"
@@ -37,6 +38,5 @@ export default function Providers({ children }: { children: ReactNode }) {
         }}
       />
     </QueryClientProvider>
-    </LoadingProvider>
   );
 }
