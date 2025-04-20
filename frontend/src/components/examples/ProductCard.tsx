@@ -67,7 +67,7 @@ const ProductCard = ({ product, isFavorite: initialIsFavorite = false }: Product
             {/* Expand button positioned at bottom left */}
             <div className="absolute bottom-2 left-2 z-20 transition-opacity duration-300">
               <button
-                onClick={handleToggleFavorite}
+                // onClick={handleToggleFavorite}
                 className="p-2 bg-black bg-opacity-30  text-white font-bold rounded-full shadow-md transition-all duration-200 hover:scale-110"
                 aria-label="Expand image"
               >
