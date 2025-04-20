@@ -44,10 +44,12 @@ const Hero = () => {
   }, [controls, inView]);
 
   const scrollToMenu = () => {
-    document.getElementById('menu-section')?.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (typeof window !== 'undefined') {
+      document.getElementById('menu-section')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   };
 
   const containerVariants = {
