@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   reactStrictMode: true,
   trailingSlash: false, // Choose either this OR skipTrailingSlashRedirect
   images: {
