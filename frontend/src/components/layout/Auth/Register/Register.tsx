@@ -6,9 +6,11 @@ import { useRegister } from '@/lib/api/auth';
 import Image from 'next/image';
 import HeroImg from '../../../../../public/images/auth/register/bg.jpg';
 import Link from 'next/link';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 // import { useRouter } from 'next/navigation';
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -17,7 +19,10 @@ const Register = () => {
     last_name: '',
     phone_number: '',
   });
-  
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const { mutate: register, isPending } = useRegister();
   // const router = useRouter();
 
@@ -79,18 +84,25 @@ const Register = () => {
                 />
               </div>
               
-              <div>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  minLength={8}
-                  className="w-full px-5 py-3 bg-white/20 rounded-lg border border-white/30 text-white placeholder-white/70"
-                />
-              </div>
+              <div className="relative">
+      <input
+        type={showPassword ? "text" : "password"}
+        name="password"
+        placeholder="Password"
+        value={formData.password}
+        onChange={handleChange}
+        required
+        minLength={8}
+        className="w-full px-5 py-3 bg-white/20 rounded-lg border border-white/30 text-white placeholder-white/70"
+      />
+      <button
+        type="button"
+        onClick={togglePasswordVisibility}
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white focus:outline-none"
+      >
+        {showPassword ? <FaEyeSlash /> : <FaEye />}
+      </button>
+    </div>
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -146,7 +158,7 @@ const Register = () => {
           </div>
           
           {/* Right Side Banner */}
-          <div className="relative h-80 lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
+          <div className="relative md:block h-80 lg:h-[500px] rounded-xl overflow-hidden hidden shadow-2xl">
             <Image
               src={HeroImg}
               alt="Food background"

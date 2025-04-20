@@ -10,6 +10,7 @@ interface DailyMeals {
   breakfast: string;
   lunch: string;
   dinner: string;
+  text: string;
 }
 
 type WeeklyMeals = {
@@ -24,37 +25,44 @@ const MealPlanner = () => {
     Sunday: {
       breakfast: 'Pancakes with maple syrup and fresh berries',
       lunch: 'Grilled salmon with quinoa and roasted vegetables',
-      dinner: 'Beef stew with crusty bread'
+      dinner: 'Beef stew with crusty bread',
+      text: "its a beautiful day isn't it"
     },
     Monday: {
       breakfast: 'Avocado toast with poached eggs',
       lunch: 'Chicken Caesar salad',
-      dinner: 'Margherita pizza with pepperoni toppings'
+      dinner: 'Margherita pizza with pepperoni toppings',
+      text: "its a beautiful day isn't it"
     },
     Tuesday: {
       breakfast: 'Greek yogurt with granola and honey',
       lunch: 'Turkey and cheese sandwich with soup',
-      dinner: 'Spaghetti carbonara'
+      dinner: 'Spaghetti carbonara',
+      text: "its a beautiful day isn't it"
     },
     Wednesday: {
       breakfast: 'Smoothie bowl with chia seeds',
       lunch: 'Vegetable stir fry with rice',
-      dinner: 'Grilled chicken with mashed potatoes'
+      dinner: 'Grilled chicken with mashed potatoes',
+      text: "its a beautiful day isn't it"
     },
     Thursday: {
       breakfast: 'Omelette with mushrooms and cheese',
       lunch: 'Tuna salad wrap with chips',
-      dinner: 'Beef tacos with all the fixings'
+      dinner: 'Beef tacos with all the fixings',
+      text: "its a beautiful day isn't it"
     },
     Friday: {
       breakfast: 'French toast with bacon',
       lunch: 'Shrimp pasta alfredo',
-      dinner: 'BBQ ribs with coleslaw'
+      dinner: 'BBQ ribs with coleslaw',
+      text: "its a beautiful day isn't it"
     },
     Saturday: {
       breakfast: 'Bagel with cream cheese and smoked salmon',
       lunch: 'Burger with sweet potato fries',
-      dinner: 'Lobster risotto'
+      dinner: 'Lobster risotto',
+      text: "its a beautiful day isn't it"
     }
   };
 
@@ -102,19 +110,23 @@ const MealPlanner = () => {
   const currentDay = days[currentTime.getDay()] as DayOfWeek;
 
   return (
-    <div className="lg:bg-[#868686] lg:bg-opacity-20 lg:text-white bg-white text-white md:text-gray-800 p-4 lg:p-6 rounded-xl lg:border-2 lg:border-white lg:backdrop-blur-2xl shadow-sm lg:shadow-none">
-      <h3 className="text-lg lg:text-xl capitalize font-bold text-center mb-3 lg:mb-4">your meal planner</h3>
+    <div className="lg:bg-[#868686] lg:bg-opacity-20 lg:text-white bg-white text-white md:text-gray-800 p-4 lg:p-6 rounded-xl lg:border-2 lg:border-white lg:backdrop-blur-2xl shadow-lg lg:shadow-none">
+      <h3 className="text-lg text-black lg:text-xl capitalize font-bold text-center mb-3 lg:mb-4">your meal planner</h3>
       <div className="flex flex-col px-3 py-2 rounded-xl overflow-hidden relative bg-[#191919] bg-opacity-30 pb-4 lg:pb-6">
-        <div className=" lg:block absolute inset-0 z-10">
-          <Image
-            src={Img}
-            alt="Menu Background"
-            fill
-            className="object-cover"
-            quality={100}
-            priority
-          />
-        </div>
+      <div className="lg:block absolute inset-0 z-10">
+  <div className="relative w-full h-full">
+    <Image
+      src={Img}
+      alt="Menu Background"
+      fill
+      className="object-cover"
+      quality={100}
+      priority
+    />
+    {/* Dark overlay */}
+    <div className="absolute inset-0 bg-black/50"></div>
+  </div>
+</div>
         <div className="flex justify-between z-20 items-start my-1 lg:my-2">
           <h4 className="text-yellow-400 text-lg lg:text-xl font-bold">{currentDay}</h4>
           <div className="flex flex-col text-xs lg:text-sm">
@@ -127,6 +139,9 @@ const MealPlanner = () => {
         </div>
         <div className="text-xs lg:text-[0.7rem] mt-1 lg:mt-2">
           {mealDescription[currentMeal]}
+        </div>
+        <div className="text-xs lg:text-[0.7rem] mt-1 lg:mt-2">
+        its a beautiful day isn&apos;t it
         </div>
       </div>
     </div>
