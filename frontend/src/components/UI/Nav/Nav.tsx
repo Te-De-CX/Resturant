@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
   
   const pages = [
     { id: 1, name: "home", link: "/" },
-    { id: 2, name: "about", link: "/about"  },
+    { id: 2, name: "about", link: "/About"  },
     { id: 3, name: "menu", link: "/menu"  },
     { id: 4, name: "resturants",  link: "/restaurants" },
     // { id: 5, name: "payment",  link: "/payment" },
@@ -53,10 +53,10 @@ const Nav: React.FC = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex gap-4 items-center">
-            <Link href="/register" className="px-5 py-1.5 bg-[#191919] hover:bg-opacity-80 text-yellow-400 text-sm font-bold rounded-full border border-white/30 transition-all shadow-sm">
+            <Link href="/Register" className="px-5 py-1.5 bg-[#191919] hover:bg-opacity-80 text-yellow-400 text-sm font-bold rounded-full border border-white/30 transition-all shadow-sm">
               Get Started
             </Link>
-            <Link href="/login" className="text-black/90 hover:text-black font-semibold text-sm transition-colors">
+            <Link href="/Login" className="text-black/90 hover:text-black font-semibold text-sm transition-colors">
               Login
             </Link>
           </div>
@@ -97,10 +97,10 @@ const Nav: React.FC = () => {
                 </>
               ):(
                 <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-white/20">
-              <Link href="/register"  className="w-full py-2 bg-yellow-400 hover:bg-yellow-300/30 text-black text-lg font-bold rounded-full border flex items-center justify-center border-white/30 transition-all">
+              <Link href="/Register"  className="w-full py-2 bg-yellow-400 hover:bg-yellow-300/30 text-black text-lg font-bold rounded-full border flex items-center justify-center border-white/30 transition-all">
                 Get Started
               </Link>
-              <Link href= "/login" className=" w-full py-2 text-black/90 hover:text-black text-center  text-2xl  font-bold transition-colors">
+              <Link href= "/Login" className=" w-full py-2 text-black/90 hover:text-black text-center  text-2xl  font-bold transition-colors">
                 Login
               </Link>
             </div>
