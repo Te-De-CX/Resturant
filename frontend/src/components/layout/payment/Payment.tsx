@@ -1,3 +1,4 @@
+'use client'
 
 import PaymentNav from "./components/Nav";
 import ProtectedRoute from "../Routes/ProtectedRoute";

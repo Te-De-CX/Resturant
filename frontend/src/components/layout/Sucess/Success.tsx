@@ -1,3 +1,5 @@
+'use client'
+
 import { useRouter } from 'next/router';
 import { useOrder } from '@/lib/hooks/useOrders';
 import { useEffect } from 'react';

@@ -1,3 +1,5 @@
+'use client'
+
 import MenuCard from "./components/Card/MenuCard";
 import { card } from "@/lib/data/home/Menu";
 

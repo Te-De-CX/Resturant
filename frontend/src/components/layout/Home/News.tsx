@@ -11,18 +11,7 @@ const News = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
-  const nextSlide = useCallback(() => {
-    const nextIndex = currentIndex === newsData.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(nextIndex);
-    scrollToSlide(nextIndex);
-  }, [currentIndex]);
-
-  const prevSlide = useCallback(() => {
-    const prevIndex = currentIndex === 0 ? newsData.length - 1 : currentIndex - 1;
-    setCurrentIndex(prevIndex);
-    scrollToSlide(prevIndex);
-  }, [currentIndex]);
-
+  // Move scrollToSlide definition before functions that use it
   const scrollToSlide = useCallback((index: number) => {
     if (carouselRef.current) {
       const container = carouselRef.current;
@@ -33,6 +22,30 @@ const News = () => {
       });
     }
   }, []);
+
+  // Now include scrollToSlide in dependencies
+  const nextSlide = useCallback(() => {
+    const nextIndex = currentIndex === newsData.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(nextIndex);
+    scrollToSlide(nextIndex);
+  }, [currentIndex, scrollToSlide]); // Added scrollToSlide
+
+  const prevSlide = useCallback(() => {
+    const prevIndex = currentIndex === 0 ? newsData.length - 1 : currentIndex - 1;
+    setCurrentIndex(prevIndex);
+    scrollToSlide(prevIndex);
+  }, [currentIndex, scrollToSlide]);
+
+  // const scrollToSlide = useCallback((index: number) => {
+  //   if (carouselRef.current) {
+  //     const container = carouselRef.current;
+  //     const card = container.children[index] as HTMLElement;
+  //     container.scrollTo({
+  //       left: card.offsetLeft - container.offsetLeft - (container.clientWidth - card.clientWidth) / 2,
+  //       behavior: 'smooth'
+  //     });
+  //   }
+  // }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
