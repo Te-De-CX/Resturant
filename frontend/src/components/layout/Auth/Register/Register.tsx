@@ -140,7 +140,7 @@ const Register = () => {
               
               <div className="flex justify-between items-center pt-2">
                 <p className="text-white/80 text-sm">Already have an account?</p>
-                <Link href="/login" className="text-amber-300 hover:text-amber-200 text-sm font-medium">
+                <Link href="/Login" className="text-amber-300 hover:text-amber-200 text-sm font-medium">
                   Sign In
                 </Link>
               </div>
