@@ -44,7 +44,7 @@ const DashboardNav = () => {
     try {
       await authApi.logout();
       setShowLogoutModal(false);
-      router.push('/'); // Redirect to homepage after logout
+      router.push('/'); 
     } catch (error) {
       console.error('Logout failed:', error);
     }

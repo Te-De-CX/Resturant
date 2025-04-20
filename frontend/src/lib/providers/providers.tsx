@@ -1,24 +1,30 @@
 'use client';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode, useState, useEffect } from 'react';
-import { Toaster } from 'react-hot-toast';
-import Loader from '@/components/others/loader/Loader';
+import dynamic from 'next/dynamic';
+
+const Toaster = dynamic(
+  () => import('react-hot-toast').then((c) => c.Toaster),
+  { ssr: false }
+);
+// const Loader = dynamic(
+//   () => import('@/components/others/loader/Loader'),
+//   { ssr: false }
+// );
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
-  const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Simulate loading or add your actual loading logic
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
+    setMounted(true);
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <QueryClientProvider client={queryClient}>
-      {isLoading && <Loader />}
-      {!isLoading && children}
+      {children}
       <Toaster 
         position="top-center"
         toastOptions={{

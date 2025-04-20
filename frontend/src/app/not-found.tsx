@@ -1,3 +1,4 @@
+'use client'
 // app/not-found.tsx
 import Link from 'next/link'
 
