@@ -1,15 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  trailingSlash: true,
-  // experimental: {
-  //   missingSuspenseWithCSRBailout: false,
-  // },
-
-// next.config.js
-// module.exports = {
-  skipMiddlewareUrlNormalize: true,
-  skipTrailingSlashRedirect: true,
+  reactStrictMode: true,
+  trailingSlash: false, // Choose either this OR skipTrailingSlashRedirect
   images: {
     remotePatterns: [
       {
@@ -25,6 +18,14 @@ const nextConfig: NextConfig = {
       }
     ],
   },
-}
+  // Recommended for debugging SSR issues
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+  // Enable if you're using external redirects
+  skipMiddlewareUrlNormalize: false, // Set to true ONLY if you have custom middleware
+};
 
 export default nextConfig;
