@@ -137,12 +137,10 @@ const MealPlanner = () => {
         <div className="font-semibold text-sm lg:text-base mt-2 z-20">
           <p>{weeklyMeals[currentDay][currentMeal]}</p>
         </div>
-        <div className="text-xs lg:text-[0.7rem] mt-1 lg:mt-2">
+        <div className="text-xs lg:text-[0.7rem] my-1 lg:mt-2">
           {mealDescription[currentMeal]}
         </div>
-        <div className="text-xs lg:text-[0.7rem] mt-1 lg:mt-2">
         its a beautiful day isn&apos;t it
-        </div>
       </div>
     </div>
   );
