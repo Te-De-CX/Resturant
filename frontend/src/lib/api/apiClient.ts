@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosRequestConfig } from 'axios';
 import { queryClient } from '../helpers/react-query';
 
-const baseURL = 'https://tedecx.pythonanywhere.com/api';
+const baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://tedecx.pythonanywhere.com/api';
 
 export const apiClient = axios.create({
   baseURL: `${baseURL}`,
